@@ -371,3 +371,38 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
   .booking-foot .btn{width:100%}
   .devices{grid-template-columns:1fr}
 }
+
+/* ---------- Erweiterungen: Rückruf, Mein Bereich, Preise, Mitarbeiter ---------- */
+.notice.warn{border-color:rgba(224,168,75,.5);background:rgba(224,168,75,.08);color:#f3d9a8}
+.notice.ok{border-color:rgba(95,185,138,.45);background:rgba(95,185,138,.08);color:#bfe8d0}
+.ticket .ok.warn{color:var(--warn)}
+.callnote{font-size:12px;color:#f0cb8b;background:rgba(224,168,75,.08);border:1px dashed rgba(224,168,75,.4);border-radius:8px;padding:6px 10px;margin:0}
+.price small,.pick .p small{font-size:.55em;color:var(--muted);font-family:var(--sans)}
+.appt.pending{background:repeating-linear-gradient(135deg,#231c10,#231c10 6px,#1c170e 6px,#1c170e 12px);border:1px dashed var(--warn);border-left:3px solid var(--warn)}
+.cal-legend .i-pend{background:repeating-linear-gradient(135deg,var(--warn),var(--warn) 3px,transparent 3px,transparent 6px);border:1px dashed var(--warn)}
+.kpi.warn{border-color:rgba(224,168,75,.5)}
+.kpi.warn b{color:var(--warn)}
+.confirm-box{border:1px dashed rgba(224,168,75,.55);background:rgba(224,168,75,.05);border-radius:12px;padding:16px;margin:0 0 18px}
+.agenda{display:grid;gap:8px}
+.agenda-row{display:flex;gap:14px;align-items:flex-start;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;transition:.15s}
+.agenda-row:hover{border-color:var(--gold-d)}
+.agenda-row.now{border-color:var(--gold);box-shadow:inset 3px 0 0 var(--gold)}
+.agenda-row.past{opacity:.55}
+.agenda-row .t{font:600 16px var(--sans);color:var(--gold-l);min-width:58px;display:flex;flex-direction:column}
+.agenda-row .t small{font:400 11px var(--sans);color:var(--dim)}
+.agenda-row .grow{flex:1}
+.tbl tr.urgent td:first-child{box-shadow:inset 3px 0 0 var(--bad)}
+.price-tbl td{vertical-align:middle}
+.price-tbl .in-price{width:90px;text-align:right;padding:7px 9px}
+.price-tbl .in-dur{width:auto;padding:7px 9px}
+.staff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.staff-card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.daypill{display:inline-block;font-size:11px;padding:1px 6px;margin:0 3px 3px 0;border-radius:6px;border:1px solid var(--line);color:var(--dim)}
+.daypill.on{border-color:var(--gold-d);color:var(--gold-l);background:rgba(212,175,95,.08)}
+.pin{font-family:ui-monospace,Consolas,monospace;letter-spacing:.15em;color:var(--gold-l)}
+.cb-row{display:flex;flex-wrap:wrap;gap:8px}
+.cb{position:relative;cursor:pointer}
+.cb input{position:absolute;opacity:0;pointer-events:none}
+.cb span{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:6px 13px;font-size:13px;color:var(--muted);transition:.15s}
+.cb input:checked+span{background:var(--gold);border-color:var(--gold);color:#16120a}
+.cb input:focus-visible+span{outline:2px solid var(--gold-l);outline-offset:2px}

@@ -5,6 +5,15 @@
 **Inhaber-Login:** oben „🔒 Login“ → „Demo als Inhaber einloggen“
 (oder `inhaber@luna-demo.de` / `luna2026`).
 
+**Mitarbeiter-Login:** „🔒 Login“ → Reiter „Mitarbeiter“ → Mirgel (PIN 2222) oder Ozan (PIN 3333).
+Mitarbeiter sehen nur ihren eigenen Bereich: Mein Tag, eigener Kalender, eigene Rückrufe, Telefon-Check.
+
+**Inhaber kann zusätzlich:** Preise & Leistungen ändern (sofort online), Mitarbeiter anlegen/bearbeiten/entfernen
+(offene Termine werden auf Kollegen umverteilt oder storniert), Umsatz, Kasse/DATEV.
+
+**Damen-Farbe:** Farb-Leistungen sind online nur *vorläufig* buchbar. Der Stylist ruft an, legt die benötigte Zeit fest
+und bestätigt im Reiter „⏳ Rückrufe“. Welche Leistungen das betrifft: Schalter „📞 Rückruf“ unter „Preise“.
+
 **Live-Test für den Kunden:** Seite in zwei Fenstern öffnen – in einem als Inhaber einloggen,
 im anderen einen Termin buchen. Die Buchung erscheint sofort im Kalender (mit „NEU“).
 

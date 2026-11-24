@@ -24,7 +24,7 @@
       <a href="#buchen">Termin</a>
       <a href="#pflege">Pflege &amp; Ablauf</a>
       <a href="#kontakt">Kontakt</a>
-      <a href="#admin" class="admin-only nav-admin">◆ Inhaber-Bereich</a>
+      <a href="#admin" class="admin-only nav-admin" id="navAdmin">◆ Inhaber-Bereich</a>
       <button class="btn btn-ghost btn-sm" id="loginBtn">🔒 Login</button>
       <button class="btn btn-ghost btn-sm admin-only" id="logoutBtn">Abmelden</button>
       <a href="#buchen" class="btn btn-gold btn-sm">Termin buchen</a>
@@ -40,15 +40,15 @@
     <div class="hero-text">
       <p class="eyebrow"><span class="open-dot" id="openDot"></span><span id="openState">…</span></p>
       <h1>Ihre Krone.<br><em>Jeden Tag.</em></h1>
-      <p class="lead">Präzise Schnitte, leuchtende Farben und Pflege mit Zeit für Sie – im LUNA Coiffeur &amp; Beauty. Termin in 60 Sekunden online buchen, sofort bestätigt.</p>
+      <p class="lead">Präzise Schnitte, leuchtende Farben und Pflege mit Zeit für Sie – im LUNA Coiffeur &amp; Beauty. Termin in 60 Sekunden online buchen – Schnitt &amp; Bart sofort bestätigt.</p>
       <div class="hero-cta">
         <a href="#buchen" class="btn btn-gold">Jetzt Termin buchen</a>
         <a href="#schnellfinder" class="btn btn-ghost">⚡ Nächster freier Termin</a>
       </div>
       <ul class="hero-facts">
         <li><strong>Mo–Sa</strong><span>für Sie geöffnet</span></li>
-        <li><strong>3</strong><span>Stylisten</span></li>
-        <li><strong>Sofort</strong><span>bestätigt – ohne Warten</span></li>
+        <li><strong id="statStylists">3</strong><span>Stylisten</span></li>
+        <li><strong>Sofort</strong><span>bestätigt · Farbe nach kurzem Anruf</span></li>
       </ul>
     </div>
     <div class="hero-logo"><img src="logo.svg" alt=""></div>
@@ -103,7 +103,7 @@
     <div class="section-head">
       <p class="eyebrow">Online-Terminbuchung</p>
       <h2>Termin buchen – sofort bestätigt</h2>
-      <p class="muted">Kein Warten auf Rückruf: Ihr Platz wird beim Absenden direkt reserviert und ist für niemanden sonst mehr buchbar.</p>
+      <p class="muted">Ihr Platz wird beim Absenden direkt reserviert und ist für niemanden sonst mehr buchbar. Bei Farbbehandlungen für Damen rufen wir Sie kurz an, um die benötigte Zeit abzustimmen – danach ist der Termin fest.</p>
     </div>
     <div class="booking card">
       <ol class="steps" id="steps">
@@ -133,7 +133,7 @@
       <h2>So läuft Ihr Besuch ab</h2>
     </div>
     <ol class="flow">
-      <li><span>1</span><h4>Online buchen</h4><p>Leistung, Stylist und Zeit wählen – der Platz ist sofort Ihrer. Bestätigung per E-Mail &amp; SMS.</p></li>
+      <li><span>1</span><h4>Online buchen</h4><p>Leistung, Stylist und Zeit wählen – der Platz ist sofort Ihrer. Bei Farbe klären wir per kurzem Anruf die Zeit, dann folgt die Bestätigung per E-Mail &amp; SMS.</p></li>
       <li><span>2</span><h4>Erinnerung</h4><p>24 h vorher erinnern wir Sie per SMS. Stornieren geht kostenlos bis 24 h vorher.</p></li>
       <li><span>3</span><h4>Beratung</h4><p>Vor jeder Leistung: kurze Haaranalyse und Abstimmung Ihrer Wunsch-Notiz.</p></li>
       <li><span>4</span><h4>Pflege für zu Hause</h4><p>Sie bekommen Ihre persönliche Pflegeempfehlung mit – ganz ohne Verkaufsdruck.</p></li>
@@ -154,18 +154,12 @@
   <div class="wrap">
     <div class="admin-head">
       <div>
-        <p class="eyebrow">Intern · nur für Inhaber sichtbar</p>
-        <h2>Inhaber-Bereich</h2>
+        <p class="eyebrow" id="adminEyebrow">Intern</p>
+        <h2 id="adminTitle">Inhaber-Bereich</h2>
       </div>
       <div class="live-pill"><span class="live-dot"></span> Live · <span id="liveClock"></span></div>
     </div>
-    <div class="tabs" id="adminTabs">
-      <button data-tab="kalender" class="active">📅 Kalender</button>
-      <button data-tab="telefon">📞 Telefon-Check</button>
-      <button data-tab="umsatz">📈 Umsatz &amp; Team</button>
-      <button data-tab="kasse">🧾 Kasse · TSE · DATEV</button>
-      <button data-tab="geraete">💻 Geräte</button>
-    </div>
+    <div class="tabs" id="adminTabs"></div>
     <div id="adminBody"></div>
   </div>
 </section>

@@ -12,7 +12,7 @@ const CATS = [
   { id: 'bart', name: 'Bart & Herren' },
   { id: 'beauty', name: 'Beauty & Pflege' },
 ];
-const SERVICES = [
+const DEF_SERVICES = [
   { id: 's1', cat: 'schnitt', name: 'Damenhaarschnitt', desc: 'Waschen, Beratung, Schnitt & Föhnfrisur.', price: 52, dur: 60, w: 9, tag: 'Beliebt' },
   { id: 's2', cat: 'schnitt', name: 'Herrenhaarschnitt', desc: 'Waschen, Schnitt & Styling – klassisch oder Fade.', price: 29, dur: 30, w: 12, tag: 'Beliebt' },
   { id: 's3', cat: 'schnitt', name: 'Kinderhaarschnitt (bis 12 J.)', desc: 'Mit Geduld und Spaß – inkl. kleiner Überraschung.', price: 19, dur: 30, w: 4 },
@@ -20,11 +20,11 @@ const SERVICES = [
   { id: 's5', cat: 'styling', name: 'Waschen & Föhnen', desc: 'Volumen, glatt oder Beach Waves.', price: 32, dur: 45, w: 4 },
   { id: 's6', cat: 'styling', name: 'Hochsteckfrisur', desc: 'Für Hochzeiten, Feste & besondere Anlässe.', price: 69, dur: 60, w: 2 },
   { id: 's7', cat: 'styling', name: 'Braut-Styling inkl. Probe', desc: 'Probetermin + Styling am großen Tag.', price: 189, dur: 120, w: 1, tag: 'Premium' },
-  { id: 's8', cat: 'farbe', name: 'Ansatzfarbe', desc: 'Ansatz färben inkl. Glanzpflege & Föhnen.', price: 62, dur: 90, w: 5 },
-  { id: 's9', cat: 'farbe', name: 'Komplettfarbe', desc: 'Ganzflächige Coloration, Pflege & Föhnen.', price: 84, dur: 120, w: 3 },
-  { id: 's10', cat: 'farbe', name: 'Balayage', desc: 'Handgemalte, natürliche Verläufe inkl. Toner & Schnitt.', price: 159, dur: 180, w: 3, tag: 'Signature' },
-  { id: 's11', cat: 'farbe', name: 'Foliensträhnen', desc: 'Feine oder kräftige Highlights inkl. Toner.', price: 119, dur: 150, w: 2 },
-  { id: 's12', cat: 'farbe', name: 'Glossing / Toner', desc: 'Mehr Glanz, Farbe auffrischen, Gelbstich weg.', price: 39, dur: 30, w: 2 },
+  { id: 's8', cat: 'farbe', confirm: true, name: 'Ansatzfarbe', desc: 'Ansatz färben inkl. Glanzpflege & Föhnen.', price: 62, dur: 90, w: 5 },
+  { id: 's9', cat: 'farbe', confirm: true, name: 'Komplettfarbe', desc: 'Ganzflächige Coloration, Pflege & Föhnen.', price: 84, dur: 120, w: 3 },
+  { id: 's10', cat: 'farbe', confirm: true, name: 'Balayage', desc: 'Handgemalte, natürliche Verläufe inkl. Toner & Schnitt.', price: 159, dur: 180, w: 3, tag: 'Signature' },
+  { id: 's11', cat: 'farbe', confirm: true, name: 'Foliensträhnen', desc: 'Feine oder kräftige Highlights inkl. Toner.', price: 119, dur: 150, w: 2 },
+  { id: 's12', cat: 'farbe', confirm: true, name: 'Glossing / Toner', desc: 'Mehr Glanz, Farbe auffrischen, Gelbstich weg.', price: 39, dur: 30, w: 2 },
   { id: 's13', cat: 'bart', name: 'Bart trimmen & Konturen', desc: 'Form, Konturen mit Klinge, Bartöl.', price: 19, dur: 30, w: 5 },
   { id: 's14', cat: 'bart', name: 'Haarschnitt + Bart', desc: 'Das Komplettpaket für ihn.', price: 44, dur: 60, w: 6, tag: 'Beliebt' },
   { id: 's15', cat: 'bart', name: 'Nassrasur mit heißem Tuch', desc: 'Klassische Rasur, Kompresse & Pflege.', price: 29, dur: 45, w: 2 },
@@ -37,11 +37,18 @@ const EXTRAS = [
   { id: 'x2', name: 'Olaplex-Pflegezusatz', price: 19, dur: 15 },
   { id: 'x3', name: 'Augenbrauen in Form', price: 12, dur: 15 },
 ];
-const STYLISTS = [
-  { id: 'safak', name: 'Şafak', role: 'Inhaber · Master Coiffeur', cats: ['schnitt', 'styling', 'farbe', 'bart'], days: [1, 2, 3, 4, 5, 6], spec: ['Präzisionsschnitt', 'Fade', 'Farbe'], bio: 'Inhaber und selbst täglich an der Schere. Steht für saubere Linien und Schnitte, die auch nach 6 Wochen noch sitzen.' },
-  { id: 'mirgel', name: 'Mirgel', role: 'Coiffeur · Farbe & Styling', cats: ['schnitt', 'styling', 'farbe', 'beauty'], days: [2, 3, 4, 5, 6], spec: ['Balayage', 'Blond', 'Styling'], bio: 'Spezialisiert auf natürliche Farbverläufe, Blondtöne und Styling für besondere Anlässe.' },
-  { id: 'ozan', name: 'Ozan', role: 'Barber', cats: ['schnitt', 'bart'], days: [1, 2, 3, 4, 5], spec: ['Skin Fade', 'Bartdesign', 'Nassrasur'], bio: 'Klassisches Barber-Handwerk mit heißem Tuch und Klinge – präzise bis ins Detail.' },
+const DEF_STYLISTS = [
+  { id: 'safak', name: 'Şafak', role: 'Inhaber · Master Coiffeur', cats: ['schnitt', 'styling', 'farbe', 'bart'], days: [1, 2, 3, 4, 5, 6], pin: '1111', spec: ['Präzisionsschnitt', 'Fade', 'Farbe'], bio: 'Inhaber und selbst täglich an der Schere. Steht für saubere Linien und Schnitte, die auch nach 6 Wochen noch sitzen.' },
+  { id: 'mirgel', name: 'Mirgel', role: 'Coiffeur · Farbe & Styling', cats: ['schnitt', 'styling', 'farbe', 'beauty'], days: [2, 3, 4, 5, 6], pin: '2222', spec: ['Balayage', 'Blond', 'Styling'], bio: 'Spezialisiert auf natürliche Farbverläufe, Blondtöne und Styling für besondere Anlässe.' },
+  { id: 'ozan', name: 'Ozan', role: 'Barber', cats: ['schnitt', 'bart'], days: [1, 2, 3, 4, 5], pin: '3333', spec: ['Skin Fade', 'Bartdesign', 'Nassrasur'], bio: 'Klassisches Barber-Handwerk mit heißem Tuch und Klinge – präzise bis ins Detail.' },
 ];
+// Leistungen & Team sind im Inhaber-Bereich änderbar und liegen danach im Zustand (S.services / S.staff).
+// Entfernte Einträge bleiben mit gone:true erhalten, damit alte Termine & Umsätze korrekt bleiben.
+let SERVICES = DEF_SERVICES, STYLISTS = DEF_STYLISTS;
+const OWNER_ID = 'safak';
+const team = () => STYLISTS.filter(s => !s.gone);
+const svcs = () => SERVICES.filter(s => !s.gone);
+const isOpenSt = a => a.status === 'gebucht' || a.status === 'vorlaeufig';
 // Öffnungszeiten in Minuten ab 0:00 (0 = Sonntag)
 const HOURS = { 1: [690, 1080], 2: [540, 1080], 3: [540, 1080], 4: [540, 1080], 5: [540, 1080], 6: [480, 840] };
 const WD = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
@@ -76,13 +83,15 @@ const stById = id => STYLISTS.find(s => s.id === id);
 const catName = id => CATS.find(c => c.id === id)?.name;
 const daysInMonth = (y, m) => new Date(y, m + 1, 0).getDate();
 const prevYm = s => { const [y, m] = s.split('-').map(Number); const d = new Date(y, m - 2, 1); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}`; };
+const clone = o => JSON.parse(JSON.stringify(o));
+const firstSvc = id => (svcById(id) && !svcById(id).gone ? id : svcs()[0]?.id);
 const ymLabel = s => { const [y, m] = s.split('-').map(Number); return `${MON[m - 1]} ${y}`; };
 function mulberry32(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 function hash(str) { let h = 2166136261; for (const c of str) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
 function hexOf(seed, len) { const r = mulberry32(seed); let s = ''; while (s.length < len) s += Math.floor(r() * 16).toString(16); return s.toUpperCase(); }
 
 /* ---------- Zustand ---------- */
-const KEY = 'luna-demo-v2';
+const KEY = 'luna-demo-v3';
 let S;
 const FIRST = ['Anna', 'Lea', 'Mia', 'Sophie', 'Emma', 'Laura', 'Elif', 'Zeynep', 'Hannah', 'Julia', 'Sarah', 'Nina', 'Ayşe', 'Lisa', 'Marie', 'Jonas', 'Luca', 'Ben', 'Emre', 'Tim', 'Felix', 'Can', 'David', 'Max', 'Murat', 'Leon', 'Paul', 'Kerem', 'Fatma', 'Clara'];
 const LAST = ['Müller', 'Schmidt', 'Yılmaz', 'Weber', 'Fischer', 'Kaya', 'Wagner', 'Becker', 'Hoffmann', 'Demir', 'Schulz', 'Koch', 'Richter', 'Klein', 'Wolf', 'Neumann', 'Şahin', 'Braun', 'Zimmermann', 'Krüger'];
@@ -124,6 +133,8 @@ function seed() {
             name: `${first} ${last[0]}.`, phone: `0176 ${Math.floor(1e6 + rnd() * 8e6)}`, email: '', note: '',
             source: rnd() < 0.55 ? 'online' : rnd() < 0.8 ? 'telefon' : 'walkin', status, createdAt: 0,
           };
+          // Damen-Farbe online: ein Teil wartet noch auf den Rückruf
+          if (status === 'gebucht' && svc.confirm && ahead >= 1 && ahead <= 12 && rnd() < 0.4) { a.status = 'vorlaeufig'; a.source = 'online'; a.reqAt = Date.now() - Math.floor(1 + rnd() * 30) * 36e5; }
           if (status === 'erledigt') a.paid = { method: rnd() < 0.42 ? 'bar' : rnd() < 0.85 ? 'ec' : 'kk', no: ++receipt, at: d };
           // Wachstumskurve: ältere Monate etwas leerer (Demo zeigt steigenden Umsatz)
           const back = (parse(t).getFullYear() - parse(d).getFullYear()) * 12 + parse(t).getMonth() - parse(d).getMonth();
@@ -133,7 +144,7 @@ function seed() {
       }
     }
   }
-  return { v: 1, seedDate: t, appts, n, receipt, tse: 18240 + receipt, datevLog: [{ month: prevYm(ym(t)), at: addDays(t, -20), rows: 0, sum: 0, to: STEUERBERATER, auto: true }], fallback: false, offline: 0 };
+  return { v: 1, seedDate: t, services: clone(DEF_SERVICES), staff: clone(DEF_STYLISTS), appts, n, receipt, tse: 18240 + receipt, datevLog: [{ month: prevYm(ym(t)), at: addDays(t, -20), rows: 0, sum: 0, to: STEUERBERATER, auto: true }], fallback: false, offline: 0 };
 }
 function genCode(rnd = Math.random) {
   const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let c;
@@ -142,10 +153,13 @@ function genCode(rnd = Math.random) {
 }
 function load() {
   try { S = JSON.parse(localStorage.getItem(KEY)); } catch { S = null; }
-  if (!S || S.v !== 1 || (parse(today()) - parse(S.seedDate)) / 864e5 > 6) { S = seed(); save(false); }
+  if (!S || S.v !== 1 || (parse(today()) - parse(S.seedDate)) / 864e5 > 6) { SERVICES = DEF_SERVICES; STYLISTS = DEF_STYLISTS; S = seed(); save(false); }
+  if (!S.services) S.services = clone(DEF_SERVICES);
+  if (!S.staff) S.staff = clone(DEF_STYLISTS);
+  SERVICES = S.services; STYLISTS = S.staff;
   // Vergangene, nicht kassierte Termine gelten als erledigt (bar)
   let ch = false;
-  for (const a of S.appts) if (a.status === 'gebucht' && a.date < today()) { a.status = 'erledigt'; a.paid = { method: 'bar', no: ++S.receipt, at: a.date }; ch = true; }
+  for (const a of S.appts) if (isOpenSt(a) && a.date < today()) { a.status = 'erledigt'; a.paid = { method: 'bar', no: ++S.receipt, at: a.date }; ch = true; }
   if (ch) save(false);
 }
 function save(broadcast = true) {
@@ -175,7 +189,7 @@ function isFree(st, date, start, dur, admin = false) {
   return !conflictOf(st.id, date, start, dur);
 }
 function freeStylists(svc, date, start, dur, pref = 'any', admin = false) {
-  return STYLISTS.filter(st => (pref === 'any' || st.id === pref) && st.cats.includes(svc.cat) && isFree(st, date, start, dur, admin));
+  return team().filter(st => (pref === 'any' || st.id === pref) && st.cats.includes(svc.cat) && isFree(st, date, start, dur, admin));
 }
 function daySlots(svc, dur, date, pref) {
   const h = HOURS[wd(date)]; if (!h) return [];
@@ -251,13 +265,14 @@ function renderHours() {
 let svcCat = 'all';
 function renderServices() {
   $('#catChips').innerHTML = [{ id: 'all', name: 'Alle' }, ...CATS].map(c => `<button class="chip ${svcCat === c.id ? 'active' : ''}" data-cat="${c.id}">${c.name}</button>`).join('');
-  const list = SERVICES.filter(s => svcCat === 'all' || s.cat === svcCat);
+  const list = svcs().filter(s => svcCat === 'all' || s.cat === svcCat);
   $('#serviceGrid').innerHTML = list.map(s => {
-    const sts = STYLISTS.filter(st => st.cats.includes(s.cat));
+    const sts = team().filter(st => st.cats.includes(s.cat));
     return `<article class="service">
-      <div class="service-top"><div><h4>${esc(s.name)}</h4>${s.tag ? `<span class="tag">${s.tag}</span>` : ''}</div><div class="price">${eur0(s.price)}</div></div>
+      <div class="service-top"><div><h4>${esc(s.name)}</h4>${s.tag ? `<span class="tag">${s.tag}</span>` : ''}</div><div class="price">${s.confirm ? '<small>ab</small> ' : ''}${eur0(s.price)}</div></div>
       <div class="service-meta"><span>⏱ ${s.dur} Min.</span><span>✂ ${catName(s.cat)}</span></div>
       <p>${esc(s.desc)}</p>
+      ${s.confirm ? '<p class="callnote">📞 Mit kurzem Beratungs-Anruf: Wir reservieren vorläufig und stimmen die Zeit telefonisch mit Ihnen ab.</p>' : ''}
       <div class="service-actions">
         <select data-stsel="${s.id}" aria-label="Mitarbeiter"><option value="any">Egal / nächster frei</option>${sts.map(st => `<option value="${st.id}">bei ${st.name}</option>`).join('')}</select>
         <button class="btn btn-gold btn-sm" data-book="${s.id}">Buchen</button>
@@ -273,7 +288,8 @@ $('#serviceGrid').addEventListener('click', e => {
 
 /* ---------- Team ---------- */
 function renderTeam() {
-  $('#teamGrid').innerHTML = STYLISTS.map(st => `<div class="member">${avatar(st)}<h4>${st.name}</h4><div class="role">${st.role}</div>
+  const st0 = $('#statStylists'); if (st0) st0.textContent = team().length;
+  $('#teamGrid').innerHTML = team().map(st => `<div class="member">${avatar(st)}<h4>${st.name}</h4><div class="role">${st.role}</div>
     <p>${esc(st.bio)}</p><p>${st.spec.map(x => `<span class="tag">${x}</span>`).join(' ')}</p>
     <p class="small dim">${st.days.map(d => WD[d]).join(' · ')}</p>
     <button class="btn btn-ghost btn-sm" data-team="${st.id}">Bei ${st.name} buchen</button></div>`).join('');
@@ -282,18 +298,22 @@ $('#teamGrid').addEventListener('click', e => { const b = e.target.closest('[dat
 
 /* ---------- Schnellfinder ---------- */
 function initFinder() {
-  $('#finderService').innerHTML = CATS.map(c => `<optgroup label="${c.name}">${SERVICES.filter(s => s.cat === c.id).map(s => `<option value="${s.id}">${esc(s.name)} · ${eur0(s.price)} · ${s.dur} Min.</option>`).join('')}</optgroup>`).join('');
-  $('#finderService').value = 's1';
+  const prev = $('#finderService').value;
+  $('#finderService').innerHTML = CATS.map(c => { const l = svcs().filter(s => s.cat === c.id); return l.length ? `<optgroup label="${c.name}">${l.map(s => `<option value="${s.id}">${esc(s.name)} · ${s.confirm ? 'ab ' : ''}${eur0(s.price)} · ${s.dur} Min.</option>`).join('')}</optgroup>` : ''; }).join('');
+  $('#finderService').value = firstSvc(prev || 's1');
   $('#finderService').onchange = () => { fillFinderStylists(); renderFinder(); };
   $('#finderStylist').onchange = renderFinder;
   fillFinderStylists();
 }
 function fillFinderStylists() {
   const svc = svcById($('#finderService').value);
-  $('#finderStylist').innerHTML = `<option value="any">Egal – wer zuerst frei ist</option>` + STYLISTS.filter(st => st.cats.includes(svc.cat)).map(st => `<option value="${st.id}">${st.name}</option>`).join('');
+  const prev = $('#finderStylist').value;
+  $('#finderStylist').innerHTML = `<option value="any">Egal – wer zuerst frei ist</option>` + team().filter(st => st.cats.includes(svc.cat)).map(st => `<option value="${st.id}">${st.name}</option>`).join('');
+  if ([...$('#finderStylist').options].some(o => o.value === prev)) $('#finderStylist').value = prev;
 }
 function renderFinder() {
   const svc = svcById($('#finderService').value), pref = $('#finderStylist').value;
+  if (!svc) { $('#finderResults').innerHTML = ''; return; }
   const res = nextFree(svc, svc.dur, pref, 4);
   $('#finderResults').innerHTML = res.length ? res.map(r => {
     const st = pref === 'any' ? leastBusy(r.free, r.date) : stById(pref);
@@ -329,17 +349,19 @@ function renderBooking() {
   const body = $('#bookingBody');
   if (B.step === 'done') return renderConfirmation();
   let html = '';
+  if (B.stylist !== 'any' && (!stById(B.stylist) || stById(B.stylist).gone)) B.stylist = 'any';
+  if (B.svc && svcById(B.svc)?.gone) { B.svc = null; B.step = 1; }
   if (B.step === 1) {
-    const allowed = SERVICES.filter(s => B.stylist === 'any' || stById(B.stylist).cats.includes(s.cat));
+    const allowed = svcs().filter(s => B.stylist === 'any' || stById(B.stylist).cats.includes(s.cat));
     const cats = CATS.filter(c => allowed.some(s => s.cat === c.id));
     html = `${B.stylist !== 'any' ? `<div class="notice" style="margin-bottom:16px">Leistungen von <b>${stById(B.stylist).name}</b> · <button class="linkbtn" data-act="anyst">alle anzeigen</button></div>` : ''}
       <div class="chips">${[{ id: 'all', name: 'Alle' }, ...cats].map(c => `<button class="chip ${B.cat === c.id ? 'active' : ''}" data-bcat="${c.id}">${c.name}</button>`).join('')}</div>
-      <div class="pick-grid">${allowed.filter(s => B.cat === 'all' || s.cat === B.cat).map(s => `<button class="pick ${B.svc === s.id ? 'active' : ''}" data-svc="${s.id}"><span>${esc(s.name)}<small>${s.dur} Min. · ${catName(s.cat)}</small></span><span class="p">${eur0(s.price)}</span></button>`).join('')}</div>
+      <div class="pick-grid">${allowed.filter(s => B.cat === 'all' || s.cat === B.cat).map(s => `<button class="pick ${B.svc === s.id ? 'active' : ''}" data-svc="${s.id}"><span>${esc(s.name)}<small>${s.dur} Min. · ${catName(s.cat)}${s.confirm ? ' · 📞 mit Beratungs-Anruf' : ''}</small></span><span class="p">${s.confirm ? '<small>ab</small> ' : ''}${eur0(s.price)}</span></button>`).join('')}</div>
       <div class="subhead">Zusatzoptionen</div>
       <div class="extras">${EXTRAS.map(x => `<button class="pick ${B.extras.includes(x.id) ? 'active' : ''}" data-extra="${x.id}"><span>${x.name}<small>+${x.dur} Min.</small></span><span class="p">+${eur0(x.price)}</span></button>`).join('')}</div>`;
   } else if (B.step === 2) {
     const svc = svcById(B.svc);
-    const sts = STYLISTS.filter(st => st.cats.includes(svc.cat));
+    const sts = team().filter(st => st.cats.includes(svc.cat));
     const nf = nextFree(svc, bDur(), 'any', 1)[0];
     html = `<div class="pick-grid">
       <button class="pick ${B.stylist === 'any' ? 'active' : ''}" data-st="any"><span><b>Egal – nächster freier Platz</b><small>${nf ? `Frühestens ${relDay(nf.date)}, ${hm(nf.start)} Uhr` : '—'}</small></span><span class="p">⚡</span></button>
@@ -378,15 +400,17 @@ function renderBooking() {
           ${B.extras.length ? `<dt>Extras</dt><dd>${B.extras.map(x => EXTRAS.find(e => e.id === x).name).join(', ')}</dd>` : ''}
           <dt>Stylist</dt><dd>${B.stylist === 'any' ? 'Nächster freier' : stById(B.stylist).name}</dd>
           <dt>Termin</dt><dd>${fmtDate(B.date, true)}<br>${hm(B.start)} – ${hm(B.start + bDur())} Uhr</dd>
-          <dt>Preis</dt><dd class="gold"><b>${eur(bPrice())}</b> <span class="muted small">zahlbar vor Ort</span></dd>
+          <dt>Preis</dt><dd class="gold"><b>${svcById(B.svc).confirm ? 'ab ' : ''}${eur(bPrice())}</b> <span class="muted small">${svcById(B.svc).confirm ? 'endgültig nach Beratung' : 'zahlbar vor Ort'}</span></dd>
         </dl>
-        <p class="small muted" style="margin-top:14px">✓ Sofort verbindlich bestätigt – keine Wartezeit auf Freigabe.</p>
+        ${svcById(B.svc).confirm
+          ? `<div class="notice warn" style="margin-top:14px">📞 <b>Vorläufige Reservierung.</b> Bei Farbbehandlungen rufen wir Sie kurz an (Haarlänge, Ausgangsfarbe, Wunschergebnis), damit Ihr Stylist die Zeit richtig einplant. Nach dem Telefonat ist der Termin fest bestätigt – Ihr Zeitfenster bleibt bis dahin für Sie reserviert.</div>`
+          : '<p class="small muted" style="margin-top:14px">✓ Sofort verbindlich bestätigt – keine Wartezeit auf Freigabe.</p>'}
       </div></div>`;
   }
   const canNext = B.step === 1 ? !!B.svc : B.step === 2 ? true : B.step === 3 ? B.start != null : true;
   html += `<div class="booking-foot">${summaryLine()}<div style="display:flex;gap:10px">
     ${B.step > 1 ? '<button class="btn btn-ghost" data-act="back">Zurück</button>' : ''}
-    ${B.step < 4 ? `<button class="btn btn-gold" data-act="next" ${canNext ? '' : 'disabled'}>Weiter</button>` : '<button class="btn btn-gold" data-act="submit">Verbindlich buchen</button>'}
+    ${B.step < 4 ? `<button class="btn btn-gold" data-act="next" ${canNext ? '' : 'disabled'}>Weiter</button>` : `<button class="btn btn-gold" data-act="submit">${svcById(B.svc).confirm ? 'Vorläufig reservieren' : 'Verbindlich buchen'}</button>`}
   </div></div>`;
   body.innerHTML = html;
 }
@@ -429,31 +453,34 @@ function submitBooking() {
   const a = {
     id: 'a' + (++S.n), code: genCode(), date: B.date, start: B.start, dur, stylist: st.id, service: svc.id, extras: [...B.extras], price: bPrice(),
     name: B.form.name.trim(), phone: B.form.phone.trim(), email: (B.form.email || '').trim(), note: (B.form.note || '').trim(),
-    firstVisit: !!B.form.firstVisit, remind: !!B.form.remind, source: 'online', status: 'gebucht', createdAt: Date.now(),
+    firstVisit: !!B.form.firstVisit, remind: !!B.form.remind, source: 'online', status: svc.confirm ? 'vorlaeufig' : 'gebucht', createdAt: Date.now(),
   };
   S.appts.push(a);
   save();
   B.step = 'done'; B.done = a.id;
   renderBooking();
-  if (isAdmin()) toast(`🔔 <b>Neue Online-Buchung</b><br>${esc(a.name)} · ${esc(svc.name)}<br>${relDay(a.date)} ${hm(a.start)} bei ${st.name}`);
+  if (isAdmin()) toast(`🔔 <b>Neue ${a.status === 'vorlaeufig' ? 'vorläufige ' : ''}Online-Buchung</b>${a.status === 'vorlaeufig' ? ' · ⏳ Rückruf nötig' : ''}<br>${esc(a.name)} · ${esc(svc.name)}<br>${relDay(a.date)} ${hm(a.start)} bei ${st.name}`);
 }
 function renderConfirmation() {
   const a = S.appts.find(x => x.id === B.done); if (!a) return startBooking({});
   const svc = svcById(a.service), st = stById(a.stylist);
   const gcal = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('LUNA: ' + svc.name)}&dates=${icsDate(a.date, a.start)}/${icsDate(a.date, a.start + a.dur)}&details=${encodeURIComponent('Buchungscode ' + a.code + ' · bei ' + st.name)}&location=${encodeURIComponent('LUNA Coiffeur & Beauty, Bahnhofstraße 82, 75417 Mühlacker')}`;
+  const pend = a.status === 'vorlaeufig', first = esc(a.name.split(' ')[0]);
   $('#bookingBody').innerHTML = `<div class="confirm">
     <div class="ticket">
-      <div class="ok">✓ Termin ist fest gebucht &amp; bestätigt</div>
+      ${pend ? '<div class="ok warn">⏳ Vorläufig reserviert – wir rufen Sie an</div>' : '<div class="ok">✓ Termin ist fest gebucht &amp; bestätigt</div>'}
       <p class="muted small" style="margin:0">Ihr Buchungscode</p>
       <div class="code">${a.code}</div>
       <dl class="dl">
         <dt>Leistung</dt><dd>${esc(svc.name)}${a.extras.length ? ' + ' + a.extras.map(x => EXTRAS.find(e => e.id === x).name).join(', ') : ''}</dd>
         <dt>Wann</dt><dd>${fmtDate(a.date, true)}<br>${hm(a.start)} – ${hm(a.start + a.dur)} Uhr</dd>
         <dt>Stylist</dt><dd>${st.name} <span class="muted small">(${st.role})</span></dd>
-        <dt>Preis</dt><dd>${eur(a.price)} · zahlbar vor Ort (bar/Karte)</dd>
+        <dt>Preis</dt><dd>${pend ? 'ab ' : ''}${eur(a.price)} · ${pend ? 'endgültig nach Beratung' : 'zahlbar vor Ort (bar/Karte)'}</dd>
+        ${pend ? `<dt>Status</dt><dd><span class="badge b-warn">VORLÄUFIG</span> Wir melden uns innerhalb von 24 h (werktags) unter ${esc(a.phone)}.</dd>` : ''}
         <dt>Wo</dt><dd>Bahnhofstraße 82, 75417 Mühlacker</dd>
         ${a.note ? `<dt>Ihre Notiz</dt><dd>${esc(a.note)}</dd>` : ''}
       </dl>
+      ${pend ? `<div class="notice warn" style="margin-top:18px"><b>Warum ein Anruf?</b> Wie lange eine Farbe dauert, hängt stark von Haarlänge, Dichte und Ausgangsfarbe ab. Im kurzen Telefonat klärt ${st.name} das mit Ihnen und plant die passende Zeit ein. Sie erreichen uns auch selbst: <a href="tel:+4970418281650">07041 8281650</a>.</div>` : ''}
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
         <button class="btn btn-gold btn-sm" data-act="ics" data-id="${a.id}">📅 In Kalender eintragen (.ics)</button>
         <a class="btn btn-ghost btn-sm" href="${gcal}" target="_blank" rel="noopener">Google Kalender</a>
@@ -462,11 +489,15 @@ function renderConfirmation() {
     </div>
     <div class="msgs">
       <div class="msg"><div class="msg-h"><span>✉ E-Mail an ${esc(a.email || 'Ihre Adresse')}</span><span class="dstat" data-delay="900">wird gesendet …</span></div>
-        <b>Betreff: Ihr Termin bei LUNA ist bestätigt – ${a.code}</b><br><br>
-        Hallo ${esc(a.name.split(' ')[0])},<br>wir freuen uns auf Sie am <b>${fmtDate(a.date, true)}</b> um <b>${hm(a.start)} Uhr</b> bei ${st.name}.<br>
-        Leistung: ${esc(svc.name)} (${a.dur} Min., ${eur(a.price)}).<br>Kalendereintrag hängt an. Stornieren kostenlos bis 24 h vorher mit Code ${a.code}.<br><br>Ihr LUNA-Team ✂</div>
+        ${pend ? `<b>Betreff: Ihre Terminanfrage bei LUNA – ${a.code}</b><br><br>
+        Hallo ${first},<br>vielen Dank! Wir haben <b>${fmtDate(a.date, true)}</b> um <b>${hm(a.start)} Uhr</b> bei ${st.name} <b>vorläufig</b> für Sie reserviert.<br>
+        Für ${esc(svc.name)} rufen wir Sie kurz an, um die benötigte Zeit abzustimmen. Danach erhalten Sie die feste Bestätigung.<br><br>Ihr LUNA-Team ✂`
+        : `<b>Betreff: Ihr Termin bei LUNA ist bestätigt – ${a.code}</b><br><br>
+        Hallo ${first},<br>wir freuen uns auf Sie am <b>${fmtDate(a.date, true)}</b> um <b>${hm(a.start)} Uhr</b> bei ${st.name}.<br>
+        Leistung: ${esc(svc.name)} (${a.dur} Min., ${eur(a.price)}).<br>Kalendereintrag hängt an. Stornieren kostenlos bis 24 h vorher mit Code ${a.code}.<br><br>Ihr LUNA-Team ✂`}</div>
       <div class="msg sms"><div class="msg-h"><span>💬 SMS an ${esc(a.phone)}</span><span class="dstat" data-delay="1600">wird gesendet …</span></div>
-        LUNA Coiffeur: Termin bestätigt ✓ ${relDay(a.date)} ${hm(a.start)} Uhr bei ${st.name} (${esc(svc.name)}). Code ${a.code}. ${a.remind ? 'Wir erinnern Sie 24 h vorher.' : ''}</div>
+        ${pend ? `LUNA Coiffeur: Danke für Ihre Anfrage! ${relDay(a.date)} ${hm(a.start)} Uhr bei ${st.name} ist vorläufig reserviert. Wir rufen Sie kurz zur Zeitabstimmung an. Code ${a.code}.`
+        : `LUNA Coiffeur: Termin bestätigt ✓ ${relDay(a.date)} ${hm(a.start)} Uhr bei ${st.name} (${esc(svc.name)}). Code ${a.code}. ${a.remind ? 'Wir erinnern Sie 24 h vorher.' : ''}`}</div>
       <p class="small dim">Simulation: In der echten Version gehen E-Mail &amp; SMS automatisch raus (z. B. über den Mail-/SMS-Dienst der Kassen- bzw. Buchungssoftware).</p>
     </div></div>`;
   $$('.dstat').forEach(el => setTimeout(() => { el.textContent = 'zugestellt ✓'; el.style.color = 'var(--ok)'; }, +el.dataset.delay));
@@ -488,9 +519,9 @@ $('#manageForm').addEventListener('submit', e => {
   const out = $('#manageResult');
   if (!a) { out.innerHTML = '<div class="notice err">Kein Termin mit diesem Code gefunden.</div>'; return; }
   const svc = svcById(a.service), st = stById(a.stylist);
-  const stat = { gebucht: 'bestätigt', erledigt: 'abgeschlossen', storniert: 'storniert', noshow: 'nicht wahrgenommen' }[a.status];
+  const stat = { gebucht: 'bestätigt', vorlaeufig: 'vorläufig – wir rufen Sie zur Zeitabstimmung an', erledigt: 'abgeschlossen', storniert: 'storniert', noshow: 'nicht wahrgenommen' }[a.status];
   out.innerHTML = `<div class="notice">${esc(svc.name)} bei ${st.name} · ${fmtDate(a.date, true)}, ${hm(a.start)} Uhr · Status: <b>${stat}</b>
-    ${a.status === 'gebucht' ? ` · <button class="linkbtn" id="cancelMine">Termin stornieren</button>` : ''}</div>`;
+    ${isOpenSt(a) ? ` · <button class="linkbtn" id="cancelMine">Termin stornieren</button>` : ''}</div>`;
   const c = $('#cancelMine');
   if (c) c.onclick = () => { if (!confirm('Termin wirklich stornieren? Der Platz wird sofort wieder freigegeben.')) return; a.status = 'storniert'; a.cancelledAt = Date.now(); save(); out.innerHTML = '<div class="notice">✓ Storniert. Der Platz ist wieder frei. Bis bald!</div>'; if (isAdmin()) toast(`↩ <b>Online-Storno</b>: ${esc(a.name)} · ${relDay(a.date)} ${hm(a.start)}`); };
 });
@@ -508,9 +539,9 @@ let careSel = 'trocken';
 function renderCare() {
   $('#careChips').innerHTML = CARE.map(c => `<button class="chip ${careSel === c.id ? 'active' : ''}" data-care="${c.id}">${c.name}</button>`).join('');
   const c = CARE.find(x => x.id === careSel), s = svcById(c.svc);
-  $('#careOut').innerHTML = `<p class="eyebrow">Empfehlung: ${c.name}</p><ul>${c.tips.map(t => `<li>${t}</li>`).join('')}</ul>
+  $('#careOut').innerHTML = `<p class="eyebrow">Empfehlung: ${c.name}</p><ul>${c.tips.map(t => `<li>${t}</li>`).join('')}</ul>` + (!s || s.gone ? '' : `
     <p class="small muted">Passende Behandlung: <b class="gold">${esc(s.name)}</b> · ${eur0(s.price)} · ${s.dur} Min.</p>
-    <button class="btn btn-ghost btn-sm" data-carebook="${s.id}">Diese Behandlung buchen</button>`;
+    <button class="btn btn-ghost btn-sm" data-carebook="${s.id}">Diese Behandlung buchen</button>`);
 }
 $('#careChips').addEventListener('click', e => { const b = e.target.closest('[data-care]'); if (b) { careSel = b.dataset.care; renderCare(); } });
 $('#careOut').addEventListener('click', e => { const b = e.target.closest('[data-carebook]'); if (b) startBooking({ svc: b.dataset.carebook, step: 2 }); });
@@ -518,16 +549,26 @@ $('#careOut').addEventListener('click', e => { const b = e.target.closest('[data
 /* =====================================================================
    INHABER-BEREICH
    ===================================================================== */
-const isAdmin = () => sessionStorage.getItem('luna-admin') === '1';
-function setAdmin(on) {
-  if (on) sessionStorage.setItem('luna-admin', '1'); else sessionStorage.removeItem('luna-admin');
-  document.body.classList.toggle('is-admin', on);
-  if (on) renderAdmin();
+// Sitzung: { role: 'owner' } oder { role: 'staff', id }
+const sess = () => { try { return JSON.parse(sessionStorage.getItem('luna-sess')); } catch { return null; } };
+const isAdmin = () => !!sess();            // irgendein interner Zugang
+const isOwner = () => sess()?.role === 'owner';
+const me = () => isOwner() ? null : sess()?.id;   // Mitarbeiter-ID (null = Inhaber sieht alles)
+const myId = () => me() || OWNER_ID;
+const userName = () => stById(myId())?.name || 'Inhaber';
+function setSession(v) {
+  if (v) sessionStorage.setItem('luna-sess', JSON.stringify(v)); else sessionStorage.removeItem('luna-sess');
+  document.body.classList.toggle('is-admin', !!v);
+  if (v) { A.tab = v.role === 'owner' ? 'kalender' : 'mein'; renderAdmin(); }
 }
-$('#loginBtn').onclick = () => {
+$('#loginBtn').onclick = () => loginModal('owner');
+function loginModal(mode) {
+  const staff = team().filter(st => st.id !== OWNER_ID);
   openModal(`<img src="logo.svg" class="login-logo" alt="LUNA">
+    <div class="seg" style="display:flex;margin:0 auto 18px;width:max-content"><button data-lm="owner" class="${mode === 'owner' ? 'active' : ''}">Inhaber</button><button data-lm="staff" class="${mode === 'staff' ? 'active' : ''}">Mitarbeiter</button></div>
+    ${mode === 'owner' ? `
     <h3 class="h3" style="text-align:center">Inhaber-Login</h3>
-    <p class="muted small" style="text-align:center">Interner Bereich: Kalender, Umsätze, Kasse &amp; DATEV.</p>
+    <p class="muted small" style="text-align:center">Alles: Kalender, Rückrufe, Umsätze, Kasse &amp; DATEV, Preise und Mitarbeiter.</p>
     <form id="loginForm">
       <div class="field"><label>E-Mail</label><input name="u" type="email" placeholder="${DEMO_USER}" required></div>
       <div class="field"><label>Passwort</label><input name="p" type="password" placeholder="${DEMO_PW}" required></div>
@@ -535,34 +576,74 @@ $('#loginBtn').onclick = () => {
       <button class="btn btn-gold" style="width:100%">Anmelden</button>
     </form>
     <div class="divider">oder</div>
-    <button class="btn btn-ghost" style="width:100%" id="demoLogin">◆ Demo als Inhaber einloggen</button>
-    <p class="small dim" style="text-align:center;margin-top:12px">Demo-Zugang: ${DEMO_USER} / ${DEMO_PW}</p>`);
-  $('#loginForm').onsubmit = e => {
-    e.preventDefault(); const f = new FormData(e.target);
-    if (f.get('u').trim().toLowerCase() === DEMO_USER && f.get('p') === DEMO_PW) doLogin();
-    else $('#loginErr').innerHTML = '<div class="notice err" style="margin-bottom:12px">E-Mail oder Passwort falsch.</div>';
-  };
-  $('#demoLogin').onclick = doLogin;
-};
-function doLogin() { closeModal(); setAdmin(true); toast('✓ Angemeldet als <b>Inhaber</b> – interne Bereiche sind jetzt sichtbar.'); setTimeout(() => $('#admin').scrollIntoView({ behavior: 'smooth' }), 50); }
-$('#logoutBtn').onclick = () => { setAdmin(false); toast('Abgemeldet.'); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+    <button class="btn btn-ghost" style="width:100%" id="demoLogin">◆ Demo als Inhaber (${esc(stById(OWNER_ID).name)}) einloggen</button>
+    <p class="small dim" style="text-align:center;margin-top:12px">Demo-Zugang: ${DEMO_USER} / ${DEMO_PW}</p>` : `
+    <h3 class="h3" style="text-align:center">Mitarbeiter-Login</h3>
+    <p class="muted small" style="text-align:center">Eigener Bereich: eigener Kalender, eigene Rückrufe &amp; eigene Zahlen.</p>
+    ${staff.length ? `<form id="pinForm">
+      <div class="field"><label>Name</label><select name="id">${staff.map(st => `<option value="${st.id}">${esc(st.name)}</option>`).join('')}</select></div>
+      <div class="field"><label>PIN (4-stellig)</label><input name="pin" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" required autocomplete="off"></div>
+      <div id="loginErr"></div>
+      <button class="btn btn-gold" style="width:100%">Anmelden</button>
+    </form>
+    <div class="divider">Demo</div>
+    <div style="display:grid;gap:8px">${staff.map(st => `<button class="btn btn-ghost" data-demost="${st.id}">Als ${esc(st.name)} einloggen <span class="dim small">· PIN ${esc(st.pin)}</span></button>`).join('')}</div>`
+    : '<div class="empty">Noch keine Mitarbeiter angelegt.</div>'}`}`);
+  $$('[data-lm]').forEach(b => b.onclick = () => loginModal(b.dataset.lm));
+  const err = () => $('#loginErr').innerHTML = `<div class="notice err" style="margin-bottom:12px">${mode === 'owner' ? 'E-Mail oder Passwort falsch.' : 'PIN falsch.'}</div>`;
+  if (mode === 'owner') {
+    $('#loginForm').onsubmit = e => {
+      e.preventDefault(); const f = new FormData(e.target);
+      if (f.get('u').trim().toLowerCase() === DEMO_USER && f.get('p') === DEMO_PW) doLogin({ role: 'owner' }); else err();
+    };
+    $('#demoLogin').onclick = () => doLogin({ role: 'owner' });
+  } else if ($('#pinForm')) {
+    $('#pinForm').onsubmit = e => {
+      e.preventDefault(); const f = new FormData(e.target), st = stById(f.get('id'));
+      if (st && !st.gone && st.pin === f.get('pin')) doLogin({ role: 'staff', id: st.id }); else err();
+    };
+    $$('[data-demost]').forEach(b => b.onclick = () => doLogin({ role: 'staff', id: b.dataset.demost }));
+  }
+}
+function doLogin(v) {
+  closeModal(); setSession(v);
+  toast(v.role === 'owner' ? '✓ Angemeldet als <b>Inhaber</b> – alle internen Bereiche sind sichtbar.' : `✓ Hallo <b>${esc(stById(v.id).name)}</b> – Ihr persönlicher Bereich ist geöffnet.`);
+  setTimeout(() => $('#admin').scrollIntoView({ behavior: 'smooth' }), 50);
+}
+$('#logoutBtn').onclick = () => { setSession(null); toast('Abgemeldet.'); window.scrollTo({ top: 0, behavior: 'smooth' }); };
 
 const A = { tab: 'kalender', view: 'tag', date: today(), ph: { date: today(), time: null, svc: 's2' }, per: 'monat', datevMonth: null };
+const TABS = [
+  ['mein', '✂ Mein Tag', 'all'], ['kalender', '📅 Kalender', 'all'], ['rueckruf', '⏳ Rückrufe', 'all'], ['telefon', '📞 Telefon-Check', 'all'],
+  ['umsatz', '📈 Umsatz', 'owner'], ['kasse', '🧾 Kasse · DATEV', 'owner'],
+  ['preise', '🏷 Preise', 'owner'], ['team', '👥 Mitarbeiter', 'owner'], ['geraete', '💻 Geräte', 'owner'],
+];
+const pendingList = () => S.appts.filter(a => a.status === 'vorlaeufig' && (!me() || a.stylist === me())).sort((a, b) => a.date.localeCompare(b.date) || a.start - b.start);
 $('#adminTabs').addEventListener('click', e => {
   const b = e.target.closest('[data-tab]'); if (!b) return;
-  A.tab = b.dataset.tab; $$('#adminTabs button').forEach(x => x.classList.toggle('active', x === b)); renderAdmin();
+  A.tab = b.dataset.tab; renderAdmin();
 });
 function renderAdmin() {
   if (!isAdmin()) return;
-  const fb = S.fallback ? `<div class="fallback-banner"><span>⚠ <b>iPad-Notbetrieb aktiv</b> – Kassen-PC gestört. Belege werden auf dem iPad mit Cloud-TSE signiert (${S.offline} seit Aktivierung).</span>${A.tab === 'geraete' ? '' : '<button class="btn btn-dark btn-sm" data-goto="geraete">Zum Geräte-Status</button>'}</div>` : '';
-  const f = { kalender: viewCalendar, telefon: viewPhone, umsatz: viewRevenue, kasse: viewKasse, geraete: viewDevices }[A.tab];
+  const se = sess();
+  if (se.role === 'staff' && (!stById(se.id) || stById(se.id).gone)) { setSession(null); toast('Ihr Zugang wurde vom Inhaber deaktiviert.'); return; }
+  const tabs = TABS.filter(t => t[2] === 'all' || isOwner());
+  if (!tabs.some(t => t[0] === A.tab)) A.tab = isOwner() ? 'kalender' : 'mein';
+  const pn = pendingList().length;
+  $('#adminTabs').innerHTML = tabs.map(t => `<button data-tab="${t[0]}" class="${A.tab === t[0] ? 'active' : ''}">${t[1]}${t[0] === 'rueckruf' && pn ? ` <span class="badge b-warn">${pn}</span>` : ''}</button>`).join('');
+  $('#adminEyebrow').textContent = isOwner() ? 'Intern · Inhaber-Zugang' : 'Intern · Mitarbeiter-Zugang';
+  $('#adminTitle').textContent = isOwner() ? `Inhaber-Bereich · ${stById(OWNER_ID).name}` : `Mein Bereich · ${userName()}`;
+  $('#navAdmin').textContent = isOwner() ? '◆ Inhaber-Bereich' : '◆ Mein Bereich';
+  const fb = S.fallback && isOwner() ? `<div class="fallback-banner"><span>⚠ <b>iPad-Notbetrieb aktiv</b> – Kassen-PC gestört. Belege werden auf dem iPad mit Cloud-TSE signiert (${S.offline} seit Aktivierung).</span>${A.tab === 'geraete' ? '' : '<button class="btn btn-dark btn-sm" data-goto="geraete">Zum Geräte-Status</button>'}</div>` : '';
+  const f = { mein: viewMine, kalender: viewCalendar, rueckruf: viewCallbacks, telefon: viewPhone, umsatz: viewRevenue, kasse: viewKasse, preise: viewPrices, team: viewStaff, geraete: viewDevices }[A.tab];
   $('#adminBody').onclick = null;
+  $('#adminBody').onchange = null;
   $('#adminBody').innerHTML = fb + f();
   afterRender[A.tab]?.();
 }
 const afterRender = {};
 $('#adminBody').addEventListener('click', e => {
-  const g = e.target.closest('[data-goto]'); if (g) { A.tab = g.dataset.goto; $$('#adminTabs button').forEach(x => x.classList.toggle('active', x.dataset.tab === A.tab)); renderAdmin(); }
+  const g = e.target.closest('[data-goto]'); if (g) { A.tab = g.dataset.goto; renderAdmin(); }
 });
 
 /* ---------- Kalender ---------- */
@@ -581,7 +662,7 @@ function viewCalendar() {
   if (!h) return nav + '<div class="empty">Sonntag – Salon geschlossen.</div>';
   const H = (h[1] - h[0]) / 15 * PX;
   const day = apptsOn(d).filter(active);
-  const cols = STYLISTS.map(st => {
+  const cols = (me() ? STYLISTS.filter(st => st.id === me()) : STYLISTS.filter(st => !st.gone || day.some(a => a.stylist === st.id))).map(st => {
     const on = works(st, d);
     const list = day.filter(a => a.stylist === st.id);
     const util = on ? Math.round(list.filter(a => a.status !== 'noshow').reduce((x, a) => x + a.dur, 0) / (h[1] - h[0]) * 100) : 0;
@@ -590,36 +671,37 @@ function viewCalendar() {
   let lines = ''; for (let m = h[0]; m < h[1]; m += 30) lines += `<div class="cal-line ${m % 60 === 0 ? 'hour' : ''}" style="top:${(m - h[0]) / 15 * PX}px"></div>`;
   let times = ''; for (let m = h[0] + 60; m < h[1]; m += 60) times += `<div style="top:${(m - h[0]) / 15 * PX}px">${hm(m)}</div>`;
   const nowL = d === today() && nowMin() > h[0] && nowMin() < h[1] ? `<div class="now-line" style="top:${(nowMin() - h[0]) / 15 * PX}px"></div>` : '';
-  const total = day.filter(a => a.status !== 'noshow');
+  const mine = me() ? day.filter(a => a.stylist === me()) : day;
+  const total = mine.filter(a => a.status !== 'noshow'), pendN = mine.filter(a => a.status === 'vorlaeufig').length;
   return nav + `<div class="kpis">
-      <div class="kpi"><small>Termine</small><b>${total.length}</b><span class="dim small">${day.filter(isNew).length ? `<span class="badge">${day.filter(isNew).length} NEU</span>` : 'davon online: ' + day.filter(a => a.source === 'online').length}</span></div>
+      <div class="kpi"><small>Termine</small><b>${total.length}</b><span class="dim small">${mine.filter(isNew).length ? `<span class="badge">${mine.filter(isNew).length} NEU</span> ` : ''}${pendN ? `<span class="badge b-warn">${pendN} vorläufig</span>` : 'davon online: ' + mine.filter(a => a.source === 'online').length}</span></div>
       <div class="kpi"><small>Geplanter Umsatz</small><b>${eur0(total.reduce((x, a) => x + a.price, 0))}</b><span class="dim small">kassiert: ${eur0(total.filter(a => a.status === 'erledigt').reduce((x, a) => x + a.price, 0))}</span></div>
-      <div class="kpi"><small>Auslastung</small><b>${Math.round(cols.filter(c => c.on).reduce((x, c) => x + c.util, 0) / Math.max(1, cols.filter(c => c.on).length))} %</b><span class="dim small">${cols.filter(c => c.on).length} von ${STYLISTS.length} im Dienst</span></div>
+      <div class="kpi"><small>Auslastung</small><b>${Math.round(cols.filter(c => c.on).reduce((x, c) => x + c.util, 0) / Math.max(1, cols.filter(c => c.on).length))} %</b><span class="dim small">${cols.filter(c => c.on).length} von ${cols.length} im Dienst</span></div>
       <div class="kpi"><small>Öffnungszeit</small><b>${hm(h[0])}–${hm(h[1])}</b><span class="dim small">Klick in freie Fläche = Termin eintragen</span></div></div>
-    <div class="cal-wrap"><div class="cal" style="grid-template-columns:56px repeat(${STYLISTS.length},minmax(170px,1fr))">
+    <div class="cal-wrap"><div class="cal" style="grid-template-columns:56px repeat(${cols.length},minmax(170px,1fr))">
       <div class="cal-h"></div>
-      ${cols.map(c => `<div class="cal-h">${avatar(c.st, 1)}<div><b>${c.st.name}</b><small>${c.on ? `${c.list.length} Termine · ${c.util}% belegt` : 'nicht im Dienst'}</small></div></div>`).join('')}
+      ${cols.map(c => `<div class="cal-h">${avatar(c.st, 1)}<div><b>${c.st.name}${c.st.gone ? ' <span class="badge b-mute">ehem.</span>' : ''}</b><small>${c.on ? `${c.list.length} Termine · ${c.util}% belegt` : 'nicht im Dienst'}</small></div></div>`).join('')}
       <div class="cal-times" style="height:${H}px">${times}</div>
       ${cols.map(c => `<div class="cal-col ${c.on ? '' : 'off'}" data-col="${c.st.id}" style="height:${H}px">${lines}${nowL}
         ${c.list.map(a => apptBlock(a, h[0])).join('')}</div>`).join('')}
     </div></div>
-    <div class="cal-legend"><span><i style="background:var(--gold)"></i>Online gebucht</span><span><i style="background:var(--info)"></i>Telefon</span><span><i style="background:#b48ad9"></i>Walk-in</span><span><i style="background:var(--ok)"></i>Kassiert</span><span><i style="background:var(--bad)"></i>Nicht erschienen</span><span><span class="badge">NEU</span> = in den letzten 15 Min. gebucht</span></div>`;
+    <div class="cal-legend"><span><i style="background:var(--gold)"></i>Online gebucht</span><span><i style="background:var(--info)"></i>Telefon</span><span><i style="background:#b48ad9"></i>Walk-in</span><span><i style="background:var(--ok)"></i>Kassiert</span><span><i style="background:var(--bad)"></i>Nicht erschienen</span><span><i class="i-pend"></i>Vorläufig · Rückruf offen</span><span><span class="badge">NEU</span> = in den letzten 15 Min. gebucht</span></div>`;
 }
 function apptBlock(a, open) {
   const svc = svcById(a.service);
-  const cls = ['appt', a.status === 'erledigt' ? 'done' : '', a.status === 'noshow' ? 'noshow' : '', 'src-' + a.source, isNew(a) ? 'new' : ''].join(' ');
+  const cls = ['appt', a.status === 'erledigt' ? 'done' : '', a.status === 'noshow' ? 'noshow' : '', a.status === 'vorlaeufig' ? 'pending' : '', 'src-' + a.source, isNew(a) ? 'new' : ''].join(' ');
   return `<div class="${cls}" data-appt="${a.id}" style="top:${(a.start - open) / 15 * PX + 1}px;height:${a.dur / 15 * PX - 2}px"
-    data-tip="<b>${esc(esc(a.name))}</b><br>${hm(a.start)}–${hm(a.start + a.dur)} · ${esc(svc.name)}<br>${eur(a.price)} · ${SRC[a.source]}${a.note ? '<br>📝 ' + esc(esc(a.note)) : ''}">
-    <b>${isNew(a) ? '<span class="badge">NEU</span> ' : ''}${esc(a.name)}</b><span>${hm(a.start)}–${hm(a.start + a.dur)} · ${esc(svc.name)}</span></div>`;
+    data-tip="<b>${esc(esc(a.name))}</b><br>${hm(a.start)}–${hm(a.start + a.dur)} · ${esc(svc.name)}<br>${eur(a.price)} · ${SRC[a.source]}${a.status === 'vorlaeufig' ? '<br>⏳ vorläufig – Rückruf offen' : ''}${a.note ? '<br>📝 ' + esc(esc(a.note)) : ''}">
+    <b>${a.status === 'vorlaeufig' ? '⏳ ' : ''}${isNew(a) ? '<span class="badge">NEU</span> ' : ''}${esc(a.name)}</b><span>${hm(a.start)}–${hm(a.start + a.dur)} · ${esc(svc.name)}</span></div>`;
 }
 function weekStart(d) { const w = wd(d); return addDays(d, w === 0 ? -6 : 1 - w); }
 function viewWeek() {
   const ws = weekStart(A.date);
   return `<div class="week">${Array.from({ length: 7 }, (_, i) => {
     const d = addDays(ws, i), h = HOURS[wd(d)];
-    const list = apptsOn(d).filter(a => active(a) && a.status !== 'noshow').sort((a, b) => a.start - b.start);
+    const list = apptsOn(d).filter(a => active(a) && a.status !== 'noshow' && (!me() || a.stylist === me())).sort((a, b) => a.start - b.start);
     if (!h) return `<div class="wday"><h5>${fmtDate(d)}</h5><div class="dim small">geschlossen</div></div>`;
-    const per = STYLISTS.filter(st => works(st, d)).map(st => ({ st, u: Math.round(list.filter(a => a.stylist === st.id).reduce((x, a) => x + a.dur, 0) / (h[1] - h[0]) * 100) }));
+    const per = (me() ? team().filter(st => st.id === me()) : team()).filter(st => works(st, d)).map(st => ({ st, u: Math.round(list.filter(a => a.stylist === st.id).reduce((x, a) => x + a.dur, 0) / (h[1] - h[0]) * 100) }));
     const nw = list.filter(isNew).length;
     return `<div class="wday ${d === today() ? 'today' : ''}" data-wday="${d}"><h5><span>${fmtDate(d)}</span><span class="gold">${list.length}</span></h5>
       ${nw ? `<span class="badge">${nw} NEU</span>` : ''}
@@ -636,7 +718,7 @@ afterRender.kalender = () => {
     const cal = t.closest('[data-cal]'); if (cal) { const step = A.view === 'woche' ? 7 : 1; A.date = cal.dataset.cal === 'today' ? today() : addDays(A.date, cal.dataset.cal === 'next' ? step : -step); return renderAdmin(); }
     const v = t.closest('[data-view]'); if (v) { A.view = v.dataset.view; return renderAdmin(); }
     const wdEl = t.closest('[data-wday]'); if (wdEl) { A.date = wdEl.dataset.wday; A.view = 'tag'; return renderAdmin(); }
-    if (t.closest('[data-quick]')) return quickAdd({ date: A.date });
+    if (t.closest('[data-quick]')) return quickAdd({ date: A.date, stylist: me() || 'any' });
     const ap = t.closest('[data-appt]'); if (ap) return apptModal(ap.dataset.appt);
     const col = t.closest('.cal-col'); if (col && !col.classList.contains('off')) {
       const h = HOURS[wd(A.date)], r = col.getBoundingClientRect();
@@ -649,18 +731,21 @@ afterRender.kalender = () => {
 /* Termin-Details */
 function apptModal(id) {
   const a = S.appts.find(x => x.id === id), svc = svcById(a.service), st = stById(a.stylist);
-  const stat = { gebucht: '<span class="badge b-info">Gebucht</span>', erledigt: '<span class="badge b-ok">Kassiert</span>', noshow: '<span class="badge b-bad">Nicht erschienen</span>', storniert: '<span class="badge b-mute">Storniert</span>' }[a.status];
+  const stat = { gebucht: '<span class="badge b-info">Gebucht</span>', vorlaeufig: '<span class="badge b-warn">Vorläufig</span>', erledigt: '<span class="badge b-ok">Kassiert</span>', noshow: '<span class="badge b-bad">Nicht erschienen</span>', storniert: '<span class="badge b-mute">Storniert</span>' }[a.status];
   openModal(`<p class="eyebrow">Termin ${a.code}</p><h3 class="h3">${esc(a.name)} ${stat}</h3>
     <dl class="dl" style="margin:14px 0 20px">
       <dt>Leistung</dt><dd>${esc(svc.name)}${a.extras.length ? ' + ' + a.extras.map(x => EXTRAS.find(e => e.id === x).name).join(', ') : ''}</dd>
       <dt>Zeit</dt><dd>${fmtDate(a.date, true)}, ${hm(a.start)}–${hm(a.start + a.dur)}</dd>
       <dt>Stylist</dt><dd>${st.name}</dd><dt>Preis</dt><dd>${eur(a.price)}</dd>
       <dt>Telefon</dt><dd><a href="tel:${esc(a.phone)}">${esc(a.phone)}</a></dd>${a.email ? `<dt>E-Mail</dt><dd>${esc(a.email)}</dd>` : ''}
-      <dt>Quelle</dt><dd>${SRC[a.source]}${a.createdAt ? ' · ' + new Date(a.createdAt).toLocaleString('de-DE') : ''} · automatisch bestätigt</dd>
+      <dt>Quelle</dt><dd>${SRC[a.source]}${a.createdAt ? ' · ' + new Date(a.createdAt).toLocaleString('de-DE') : ''} · ${a.status === 'vorlaeufig' ? 'wartet auf telefonische Bestätigung' : a.confirmedAt ? `telefonisch bestätigt von ${esc(a.confirmedBy)} (${new Date(a.confirmedAt).toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })})` : a.source === 'online' ? 'automatisch bestätigt' : 'intern eingetragen'}</dd>
+      ${a.callNote ? `<dt>Gespräch</dt><dd>☎ ${esc(a.callNote)}</dd>` : ''}${a.cancelReason ? `<dt>Grund</dt><dd>${esc(a.cancelReason)}</dd>` : ''}
       ${a.firstVisit ? '<dt>Hinweis</dt><dd>✨ Erstbesuch</dd>' : ''}${a.note ? `<dt>Notiz</dt><dd>📝 ${esc(a.note)}</dd>` : ''}
       ${a.paid ? `<dt>Bezahlt</dt><dd>${PAY[a.paid.method]} · Bon ${a.paid.no}</dd>` : ''}
     </dl>
+    ${a.status === 'vorlaeufig' ? confirmBox(a) : ''}
     <div style="display:flex;gap:8px;flex-wrap:wrap">
+      ${a.status === 'vorlaeufig' ? '<button class="btn btn-danger btn-sm" id="mCancel">Absagen / stornieren</button>' : ''}
       ${a.status === 'gebucht' ? `<button class="btn btn-gold btn-sm" id="mPay">🧾 Kassieren</button><button class="btn btn-dark btn-sm" id="mNo">Nicht erschienen</button><button class="btn btn-danger btn-sm" id="mCancel">Stornieren</button>` : ''}
       ${a.paid ? `<button class="btn btn-ghost btn-sm" id="mBon">Beleg anzeigen</button>` : ''}
     </div>`);
@@ -669,25 +754,75 @@ function apptModal(id) {
   on('#mNo', () => { a.status = 'noshow'; save(); closeModal(); toast('Als „nicht erschienen“ markiert – Slot wieder frei.'); });
   on('#mCancel', () => { if (confirm('Termin stornieren? Slot wird sofort freigegeben.')) { a.status = 'storniert'; save(); closeModal(); toast('Termin storniert – Slot ist wieder buchbar.'); } });
   on('#mBon', () => showReceipt(a.id));
+  if (a.status === 'vorlaeufig') bindConfirm(a);
+}
+// Rückruf: Stylist klärt am Telefon die Zeit und bestätigt erst dann fest
+function confirmBox(a) {
+  const durs = []; for (let m = 30; m <= 360; m += 15) durs.push(m);
+  const waited = Math.max(1, Math.round((Date.now() - (a.reqAt || a.createdAt || Date.now())) / 36e5));
+  return `<div class="confirm-box">
+    <p class="eyebrow" style="color:var(--warn)">⏳ Vorläufig · Bestätigung nach Telefonat</p>
+    <p class="small muted" style="margin:0 0 12px">Anfrage seit ca. ${waited} Std. Bitte anrufen, Haarlänge, Ausgangsfarbe &amp; Wunsch klären und die nötige Zeit festlegen – erst dann ist der Termin fest.</p>
+    <a class="btn btn-ghost btn-sm" href="tel:${esc(a.phone.replace(/\s/g, ''))}" style="margin-bottom:14px">📞 ${esc(a.phone)} anrufen</a>
+    ${a.calls ? `<span class="small dim" style="margin-left:8px">${a.calls}× nicht erreicht · zuletzt ${new Date(a.lastCall).toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}</span>` : ''}
+    <div class="row"><div class="field"><label>Benötigte Zeit (Einschätzung)</label><select id="cDur">${durs.map(m => `<option value="${m}" ${m === a.dur ? 'selected' : ''}>${Math.floor(m / 60) ? Math.floor(m / 60) + ' Std. ' : ''}${m % 60 ? (m % 60) + ' Min.' : ''}</option>`).join('')}</select></div>
+    <div class="field"><label>Preis nach Beratung (€)</label><input id="cPrice" type="number" min="0" step="1" value="${a.price}"></div></div>
+    <div class="field"><label>Gesprächsnotiz</label><input id="cNote" value="${esc(a.callNote || '')}" placeholder="z. B. schulterlang, dunkelblond, Balayage + Spitzen"></div>
+    <div id="cMsg" style="margin-bottom:12px"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-gold btn-sm" id="cOk">✓ Nach Telefonat fest bestätigen</button><button class="btn btn-dark btn-sm" id="cMiss">Nicht erreicht</button></div>
+  </div>`;
+}
+function bindConfirm(a) {
+  let move = null;
+  const check = () => {
+    const dur = +$('#cDur').value, h = HOURS[wd(a.date)], end = a.start + dur;
+    const c = conflictOf(a.stylist, a.date, a.start, dur, a.id);
+    move = null;
+    if (!c && end <= h[1]) { $('#cMsg').innerHTML = `<div class="notice ok">✓ Passt: ${hm(a.start)}–${hm(end)} Uhr bei ${stById(a.stylist).name} ist frei.</div>`; $('#cOk').disabled = false; return; }
+    const svc = svcById(a.service);
+    const alt = team().filter(st => st.id !== a.stylist && st.cats.includes(svc.cat) && isFree(st, a.date, a.start, dur, true));
+    const why = end > h[1] ? `endet nach Ladenschluss (${hm(h[1])})` : `überschneidet sich mit ${hm(c.start)} ${esc(c.name)}`;
+    $('#cMsg').innerHTML = `<div class="notice err">✗ ${hm(a.start)}–${hm(end)} ${why}.${alt.length ? ` <br>Frei wäre: ${alt.map(st => `<button class="linkbtn" data-mv="${st.id}">auf ${st.name} umlegen</button>`).join(' · ')}` : ' Bitte kürzere Zeit oder mit der Kundin einen anderen Termin vereinbaren (Absagen + neu eintragen).'}</div>`;
+    $('#cOk').disabled = true;
+    $$('[data-mv]').forEach(b => b.onclick = () => { move = b.dataset.mv; $('#cMsg').innerHTML = `<div class="notice ok">✓ Wird beim Bestätigen auf <b>${stById(move).name}</b> umgelegt (${hm(a.start)}–${hm(end)}).</div>`; $('#cOk').disabled = false; });
+  };
+  $('#cDur').onchange = check; check();
+  $('#cOk').onclick = () => {
+    load(); const x = S.appts.find(y => y.id === a.id); if (!x || x.status !== 'vorlaeufig') { closeModal(); return; }
+    x.dur = +$('#cDur').value; x.price = Math.max(0, Math.round(+$('#cPrice').value || x.price));
+    x.callNote = $('#cNote').value.trim(); if (move) x.stylist = move;
+    if (conflictOf(x.stylist, x.date, x.start, x.dur, x.id)) { toast('⚠ Der Platz wurde inzwischen belegt – bitte neu prüfen.'); return apptModal(x.id); }
+    x.status = 'gebucht'; x.confirmedAt = Date.now(); x.confirmedBy = userName();
+    save(); closeModal();
+    toast(`✓ <b>${esc(x.name)}</b> fest bestätigt · ${relDay(x.date)} ${hm(x.start)}–${hm(x.start + x.dur)} bei ${stById(x.stylist).name}<br><span class="dim">💬 Bestätigungs-SMS an ${esc(x.phone)} gesendet (Simulation)</span>`, 7000);
+  };
+  $('#cMiss').onclick = () => {
+    load(); const x = S.appts.find(y => y.id === a.id); if (!x) return;
+    x.calls = (x.calls || 0) + 1; x.lastCall = Date.now(); save();
+    toast(`📵 Nicht erreicht – notiert. 💬 SMS an ${esc(x.phone)}: „Bitte rufen Sie uns kurz zurück: 07041 8281650“ (Simulation)`);
+    apptModal(x.id);
+  };
 }
 
 /* Telefon-/Walk-in-Termin eintragen */
 function quickAdd(o = {}) {
-  const q = { type: 'telefon', svc: 's2', stylist: 'any', date: today(), start: null, ...o };
+  const q = { type: 'telefon', svc: firstSvc('s2'), stylist: 'any', date: today(), start: null, ...o };
+  if (q.stylist !== 'any' && !team().some(st => st.id === q.stylist)) q.stylist = 'any';
   if (q.type === 'walkin') { q.date = today(); q.start = Math.floor(nowMin() / 15) * 15; }
   const times = () => { const h = HOURS[wd(q.date)]; if (!h) return []; const r = []; for (let m = h[0]; m < h[1]; m += 15) r.push(m); return r; };
   if (q.start == null) { const t = times(); q.start = t.find(m => q.date !== today() || m >= nowMin()) ?? t[0]; }
   openModal(`<p class="eyebrow">Intern eintragen</p><h3 class="h3">Telefon- / Walk-in-Termin</h3>
     <form id="qForm">
       <div class="seg" style="margin-bottom:16px"><button type="button" data-qt="telefon">📞 Telefon</button><button type="button" data-qt="walkin">🚶 Walk-in (jetzt)</button></div>
-      <div class="row"><div class="field"><label>Leistung</label><select name="svc">${SERVICES.map(s => `<option value="${s.id}">${esc(s.name)} (${s.dur} Min.)</option>`).join('')}</select></div>
-      <div class="field"><label>Stylist</label><select name="stylist"><option value="any">Egal – wer frei ist</option>${STYLISTS.map(s => `<option value="${s.id}">${s.name}</option>`).join('')}</select></div></div>
+      <div class="row"><div class="field"><label>Leistung</label><select name="svc">${svcs().map(s => `<option value="${s.id}">${esc(s.name)} (${s.dur} Min.)</option>`).join('')}</select></div>
+      <div class="field"><label>Stylist</label><select name="stylist"><option value="any">Egal – wer frei ist</option>${team().map(s => `<option value="${s.id}">${s.name}</option>`).join('')}</select></div></div>
       <div class="row"><div class="field"><label>Datum</label><input type="date" name="date" min="${today()}"></div>
       <div class="field"><label>Uhrzeit</label><select name="start"></select></div></div>
       <div id="qAvail" style="margin-bottom:14px"></div>
       <div class="row"><div class="field"><label>Name *</label><input name="name" required placeholder="z. B. Frau Kaya"></div>
       <div class="field"><label>Telefon</label><input name="phone" type="tel"></div></div>
       <div class="field"><label>Notiz</label><input name="note" placeholder="optional"></div>
+      <p class="small dim" style="margin:-4px 0 12px">Telefonisch vereinbarte Termine (auch Farbe) gelten direkt als fest – das Gespräch hat ja schon stattgefunden.</p>
       <button class="btn btn-gold" style="width:100%" id="qSave">Termin eintragen &amp; Slot sperren</button>
     </form>`);
   const f = $('#qForm');
@@ -697,7 +832,7 @@ function quickAdd(o = {}) {
     f.start.innerHTML = times().map(m => `<option value="${m}">${hm(m)}</option>`).join('') || '<option>geschlossen</option>';
     f.start.value = q.start;
     const svc = svcById(q.svc);
-    const able = STYLISTS.filter(st => (q.stylist === 'any' || st.id === q.stylist));
+    const able = team().filter(st => (q.stylist === 'any' || st.id === q.stylist));
     const rows = able.map(st => {
       if (!works(st, q.date)) return `<span class="dim">${st.name}: nicht im Dienst</span>`;
       if (!st.cats.includes(svc.cat)) return `<span class="dim">${st.name}: bietet Leistung nicht an</span>`;
@@ -734,11 +869,12 @@ function quickAdd(o = {}) {
 /* ---------- Telefon-Check ---------- */
 function viewPhone() {
   const p = A.ph, h = HOURS[wd(p.date)];
+  p.svc = firstSvc(p.svc);
   const times = []; if (h) for (let m = h[0]; m < h[1]; m += 15) times.push(m);
   if (p.time == null || !times.includes(p.time)) p.time = times.find(m => p.date !== today() || m >= Math.ceil(nowMin() / 15) * 15) ?? times[0];
   const svc = svcById(p.svc);
   let rows = '', freeN = 0;
-  for (const st of STYLISTS) {
+  for (const st of team()) {
     let cls = 'off', status = '–', detail = '', btn = '';
     if (!h || !works(st, p.date)) { status = 'Nicht im Dienst'; }
     else if (!st.cats.includes(svc.cat)) { status = 'Bietet Leistung nicht an'; }
@@ -758,7 +894,7 @@ function viewPhone() {
       <div class="row" style="grid-template-columns:1fr 1fr 1.4fr">
         <div class="field"><label>Datum</label><input type="date" id="phDate" value="${p.date}" min="${today()}"></div>
         <div class="field"><label>Uhrzeit</label><select id="phTime">${times.map(m => `<option value="${m}" ${m === p.time ? 'selected' : ''}>${hm(m)}</option>`).join('') || '<option>geschlossen</option>'}</select></div>
-        <div class="field"><label>Leistung</label><select id="phSvc">${SERVICES.map(s => `<option value="${s.id}" ${s.id === p.svc ? 'selected' : ''}>${esc(s.name)} (${s.dur}′)</option>`).join('')}</select></div>
+        <div class="field"><label>Leistung</label><select id="phSvc">${svcs().map(s => `<option value="${s.id}" ${s.id === p.svc ? 'selected' : ''}>${esc(s.name)} (${s.dur}′)</option>`).join('')}</select></div>
       </div>
       <p class="big-answer" style="color:${freeN ? 'var(--ok)' : 'var(--bad)'}">${!h ? 'Geschlossen' : freeN ? `Ja – ${freeN} ${freeN > 1 ? 'Stylisten' : 'Stylist'} frei` : 'Leider belegt'}</p>
       <p class="muted small">${fmtDate(p.date, true)}, ${p.time != null ? hm(p.time) : ''} Uhr · ${esc(svc.name)} (${svc.dur} Min.)</p>
@@ -768,10 +904,10 @@ function viewPhone() {
     <div class="panel">
       <h4>🔔 Live-Eingang <span class="chart-legend"><span><span class="live-dot" style="display:inline-block"></span>&nbsp;synchron in allen Fenstern</span></span></h4>
       <div class="feed">${recent.length ? recent.map(a => `<div class="feed-item ${isNew(a) ? 'new' : ''}" data-appt="${a.id}" style="cursor:pointer">
-        <span>${a.status === 'storniert' ? '↩' : a.source === 'online' ? '🌐' : a.source === 'telefon' ? '📞' : '🚶'}</span>
+        <span>${a.status === 'storniert' ? '↩' : a.status === 'vorlaeufig' ? '⏳' : a.source === 'online' ? '🌐' : a.source === 'telefon' ? '📞' : '🚶'}</span>
         <div><b>${esc(a.name)}</b> ${isNew(a) ? '<span class="badge">NEU</span>' : ''} ${a.status === 'storniert' ? '<span class="badge b-mute">storniert</span>' : ''}<br>
         <span class="muted">${esc(svcById(a.service).name)} · ${relDay(a.date)} ${hm(a.start)} · ${stById(a.stylist).name}</span><br>
-        <span class="dim small">${SRC[a.source]} · ${new Date(a.createdAt).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} · automatisch bestätigt</span></div></div>`).join('')
+        <span class="dim small">${SRC[a.source]} · ${new Date(a.createdAt).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} · ${a.status === 'vorlaeufig' ? '<span style="color:var(--warn)">wartet auf Rückruf</span>' : a.confirmedAt ? 'nach Telefonat bestätigt' : 'automatisch bestätigt'}</span></div></div>`).join('')
         : `<div class="empty">Noch keine neuen Buchungen in dieser Sitzung.<br><br><b>Testen:</b> Oben im Kundenbereich einen Termin buchen – oder <button class="linkbtn" id="openSecond">zweites Fenster öffnen</button> und dort buchen. Die Buchung erscheint hier sofort.</div>`}</div>
     </div></div>`;
 }
@@ -818,7 +954,7 @@ function viewRevenue() {
   const per = A.per;
   const pool = per === 'monat' ? cur : per === 'vormonat' ? prevFull : all;
   const tot = sum(pool) || 1;
-  const staff = STYLISTS.map(st => {
+  const staff = STYLISTS.filter(st => !st.gone || pool.some(a => a.stylist === st.id)).map(st => {
     const l = pool.filter(a => a.stylist === st.id), cmp = prevSame.filter(a => a.stylist === st.id), cc = curCmp.filter(a => a.stylist === st.id);
     return { st, n: l.length, v: sum(l), avg: l.length ? sum(l) / l.length : 0, d: per === 'monat' && sum(cmp) ? (sum(cc) / sum(cmp) - 1) * 100 : null };
   }).sort((a, b) => b.v - a.v);
@@ -847,7 +983,7 @@ function viewRevenue() {
     <h4>Umsatz pro Mitarbeiter · ${perLbl[per]}
       <span class="seg"><button data-per="monat" class="${per === 'monat' ? 'active' : ''}">Dieser Monat</button><button data-per="vormonat" class="${per === 'vormonat' ? 'active' : ''}">Vormonat</button><button data-per="gesamt" class="${per === 'gesamt' ? 'active' : ''}">Gesamt</button></span></h4>
     <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Mitarbeiter</th><th class="num">Behandlungen</th><th class="num">Umsatz</th><th class="num">Ø pro Behandlung</th><th style="width:28%">Anteil</th>${per === 'monat' ? '<th class="num">vs. Vormonat</th>' : ''}</tr></thead>
-    <tbody>${staff.map(x => `<tr><td><span class="who">${avatar(x.st, 1)}<span><b>${x.st.name}</b><br><span class="small dim">${x.st.role}</span></span></span></td>
+    <tbody>${staff.map(x => `<tr><td><span class="who">${avatar(x.st, 1)}<span><b>${x.st.name}</b><br><span class="small dim">${x.st.role}${x.st.gone ? ' · ausgeschieden' : ''}</span></span></span></td>
       <td class="num">${x.n}</td><td class="num"><b>${eur(x.v)}</b></td><td class="num">${eur(x.avg)}</td>
       <td><div class="bar" style="height:8px" data-tip="${x.st.name}: ${eur(x.v)} (${(x.v / tot * 100).toFixed(1)} %)"><i style="width:${x.v / tot * 100}%;background:${C_CUR}"></i></div><span class="small dim">${(x.v / tot * 100).toFixed(1).replace('.', ',')} %</span></td>
       ${per === 'monat' ? `<td class="num">${x.d == null ? '–' : `<span class="delta ${x.d >= 0 ? 'up' : 'down'}">${x.d >= 0 ? '▲' : '▼'} ${Math.abs(x.d).toFixed(1).replace('.', ',')} %</span>`}</td>` : ''}</tr>`).join('')}
@@ -923,7 +1059,7 @@ function viewKasse() {
   return `<div class="grid3">
     <div class="panel sys"><div class="sys-h"><h5>helloCash Friseursalon</h5><span class="badge b-warn">Einrichtung · Demo</span></div>
       <p class="small muted" style="margin:0">Geplante Kassenlösung: cloudbasiert, läuft im Browser auf PC, Mac und als App auf dem iPad.</p>
-      <ul class="checklist"><li><span class="c-ok">✓</span>Konto &amp; Stammdaten angelegt</li><li><span class="c-ok">✓</span>${SERVICES.length} Leistungen + Preise importiert</li><li><span class="c-ok">✓</span>${STYLISTS.length} Mitarbeiter mit eigener PIN</li><li><span class="c-ok">✓</span>Termine → Kassenvorgang (Schnittstelle)</li><li><span class="c-wait">◷</span>Kartenterminal (ZVT) koppeln</li><li><span class="c-wait">◷</span>Bondrucker Epson TM-m30 einrichten</li></ul>
+      <ul class="checklist"><li><span class="c-ok">✓</span>Konto &amp; Stammdaten angelegt</li><li><span class="c-ok">✓</span>${svcs().length} Leistungen + Preise importiert</li><li><span class="c-ok">✓</span>${team().length} Mitarbeiter mit eigener PIN</li><li><span class="c-ok">✓</span>Termine → Kassenvorgang (Schnittstelle)</li><li><span class="c-wait">◷</span>Kartenterminal (ZVT) koppeln</li><li><span class="c-wait">◷</span>Bondrucker Epson TM-m30 einrichten</li></ul>
       <button class="btn btn-dark btn-sm" id="hcTest">Verbindung testen</button><div id="hcOut" class="small"></div></div>
     <div class="panel sys"><div class="sys-h"><h5>TSE · KassenSichV</h5><span class="badge b-ok">● aktiv</span></div>
       <dl class="kv"><dt>Typ</dt><dd>Cloud-TSE (in helloCash enthalten)</dd><dt>Seriennr.</dt><dd>${hexOf(42, 32).slice(0, 24)}…</dd><dt>Signaturzähler</dt><dd>${num(S.tse)}</dd><dt>Zertifikat</dt><dd>gültig bis 31.12.2031</dd><dt>Kasse</dt><dd>${S.fallback ? 'iPad-Fallback (Kasse 2)' : 'Kassen-PC (Kasse 1)'}</dd></dl>
@@ -1055,7 +1191,7 @@ function zBon() {
     <div class="r"><span>Vorgänge</span><span>${l.length}</span></div>
     ${Object.entries(PAY).map(([k, v]) => `<div class="r"><span>${v}</span><span>${eur(by(k))}</span></div>`).join('')}<hr>
     <div class="r"><b>Umsatz brutto</b><b>${eur(tot)}</b></div><div class="r"><span>Netto 19 %</span><span>${eur(tot / 1.19)}</span></div><div class="r"><span>USt 19 %</span><span>${eur(tot - tot / 1.19)}</span></div><hr>
-    ${STYLISTS.map(st => `<div class="r"><span>${st.name}</span><span>${eur(sum(l.filter(a => a.stylist === st.id)))}</span></div>`).join('')}<hr>
+    ${STYLISTS.filter(st => l.some(a => a.stylist === st.id)).map(st => `<div class="r"><span>${st.name}</span><span>${eur(sum(l.filter(a => a.stylist === st.id)))}</span></div>`).join('')}<hr>
     <div class="r"><span>Kassensoll Bar</span><span>${eur(by('bar'))}</span></div><div class="tse">Z-Nr. ${Math.floor(S.receipt / 30)} · TSE-Sig.-Zähler ${S.tse}</div></div>
     <div style="text-align:center;margin-top:22px"><button class="btn btn-gold btn-sm" onclick="closeModal()">Schließen</button></div>`);
 }
@@ -1103,10 +1239,250 @@ afterRender.geraete = () => {
   };
 };
 
+/* ---------- Mein Tag (eigener Bereich jedes Mitarbeiters) ---------- */
+function viewMine() {
+  const id = myId(), st = stById(id), t = today(), nm = nowMin(), cm = ym(t);
+  const todayL = apptsOn(t).filter(a => a.stylist === id && active(a)).sort((a, b) => a.start - b.start);
+  const monL = S.appts.filter(a => a.stylist === id && done(a) && ym(a.date) === cm);
+  const pend = S.appts.filter(a => a.stylist === id && a.status === 'vorlaeufig');
+  const next = S.appts.filter(a => a.stylist === id && isOpenSt(a) && a.date > t && a.date <= addDays(t, 7)).sort((a, b) => a.date.localeCompare(b.date) || a.start - b.start);
+  const cur = todayL.find(a => a.status !== 'noshow' && a.start <= nm && nm < a.start + a.dur);
+  const nxt = todayL.find(a => isOpenSt(a) && a.start > nm);
+  const row = (a, withDay) => {
+    const s = svcById(a.service);
+    const badge = a.status === 'vorlaeufig' ? '<span class="badge b-warn">vorläufig</span>' : a.status === 'erledigt' ? '<span class="badge b-ok">kassiert</span>' : a.status === 'noshow' ? '<span class="badge b-bad">nicht erschienen</span>' : a === cur ? '<span class="badge">JETZT</span>' : a === nxt ? '<span class="badge b-info">als Nächstes</span>' : '';
+    return `<div class="agenda-row ${a === cur ? 'now' : ''} ${a.status === 'erledigt' || a.status === 'noshow' ? 'past' : ''}" data-appt="${a.id}">
+      <span class="t">${withDay ? `<small>${relDay(a.date)}</small>` : ''}${hm(a.start)}<small>bis ${hm(a.start + a.dur)}</small></span>
+      <span class="grow"><b>${esc(a.name)}</b> ${badge}${a.firstVisit ? ' <span class="badge b-mute">Erstbesuch</span>' : ''}<br><span class="small muted">${esc(s.name)}${a.extras.length ? ' + ' + a.extras.length + ' Extra' : ''} · ${eur(a.price)}</span>${a.note ? `<br><span class="small dim">📝 ${esc(a.note)}</span>` : ''}</span></div>`;
+  };
+  const h = HOURS[wd(t)], working = works(st, t);
+  const free = working ? Math.max(0, (h[1] - Math.max(h[0], nm)) - todayL.filter(a => isOpenSt(a) && a.start + a.dur > nm).reduce((x, a) => x + Math.min(a.dur, a.start + a.dur - nm), 0)) : 0;
+  return `<div class="kpis">
+    <div class="kpi hl"><small>Heute · ${fmtDate(t)}</small><b>${todayL.filter(a => a.status !== 'noshow').length} Termine</b><span class="dim small">${working ? `noch ca. ${Math.floor(free / 60)} Std. ${free % 60} Min. frei` : 'heute nicht im Dienst'}</span></div>
+    <div class="kpi"><small>Mein Umsatz ${MON[+cm.slice(5) - 1]}</small><b>${eur0(sum(monL))}</b><span class="dim small">${monL.length} Behandlungen</span></div>
+    <div class="kpi"><small>Nächste 7 Tage</small><b>${next.length}</b><span class="dim small">Termine gebucht</span></div>
+    <div class="kpi ${pend.length ? 'warn' : ''}"><small>Offene Rückrufe</small><b>${pend.length}</b><span class="dim small">${pend.length ? '<button class="linkbtn" data-goto="rueckruf">jetzt anrufen →</button>' : 'alles erledigt ✓'}</span></div>
+  </div>
+  <div class="grid2">
+    <div class="panel"><h4>✂ Mein Tag · ${fmtDate(t, true)} <button class="btn btn-gold btn-sm" data-quick="1">+ Termin</button></h4>
+      ${!working ? '<div class="empty">Heute ist kein Arbeitstag für Sie. Schönen freien Tag!</div>' : todayL.length ? `<div class="agenda">${todayL.map(a => row(a)).join('')}</div>` : '<div class="empty">Heute noch keine Termine.</div>'}</div>
+    <div>
+      <div class="panel"><h4>Nächste 7 Tage</h4>${next.length ? `<div class="agenda">${next.slice(0, 12).map(a => row(a, true)).join('')}</div>${next.length > 12 ? `<p class="small dim">+ ${next.length - 12} weitere – siehe Kalender</p>` : ''}` : '<div class="empty">Keine Termine in den nächsten 7 Tagen.</div>'}</div>
+      <div class="panel" style="margin-top:16px"><h4>Mein Profil</h4>
+        <div class="who" style="margin-bottom:12px">${avatar(st, 1)}<span><b>${esc(st.name)}</b><br><span class="small dim">${esc(st.role)}</span></span></div>
+        <dl class="dl small"><dt>Arbeitstage</dt><dd>${st.days.map(d => WD[d]).join(' · ')}</dd><dt>Leistungen</dt><dd>${st.cats.map(catName).join(', ')}</dd><dt>Online</dt><dd>${st.bio ? esc(st.bio) : '—'}</dd></dl>
+        ${isOwner() ? '<p class="small dim" style="margin:12px 0 0">Profil, Arbeitstage &amp; PINs: <button class="linkbtn" data-goto="team">Mitarbeiter verwalten</button></p>' : `<p class="small dim" style="margin:12px 0 0">Änderungen an Profil oder Arbeitstagen bitte über ${esc(stById(OWNER_ID).name)} (Inhaber).</p>`}
+      </div>
+    </div>
+  </div>`;
+}
+afterRender.mein = () => {
+  $('#adminBody').onclick = e => {
+    if (e.target.closest('[data-goto]')) return;
+    if (e.target.closest('[data-quick]')) return quickAdd({ date: today(), stylist: myId() });
+    const ap = e.target.closest('[data-appt]'); if (ap) apptModal(ap.dataset.appt);
+  };
+};
+
+/* ---------- Rückrufe (vorläufige Damen-Farbe) ---------- */
+function viewCallbacks() {
+  const list = pendingList(), t = today();
+  const doneL = S.appts.filter(a => a.confirmedAt && (!me() || a.stylist === me())).sort((a, b) => b.confirmedAt - a.confirmedAt).slice(0, 6);
+  const svcNames = svcs().filter(s => s.confirm).map(s => esc(s.name)).join(', ');
+  return `<div class="notice warn" style="margin-bottom:16px">⏳ <b>So funktioniert's:</b> Leistungen mit Beratungs-Anruf (${svcNames || '—'}) werden online nur <b>vorläufig</b> reserviert – der Platz ist blockiert, aber noch nicht fest. ${me() ? 'Sie rufen' : 'Der Stylist ruft'} die Kundin an, schätzt die benötigte Zeit ein und bestätigt dann. Erst danach bekommt die Kundin die feste Bestätigung per SMS.${isOwner() ? ' Welche Leistungen das betrifft, stellen Sie unter <button class="linkbtn" data-goto="preise">Preise &amp; Leistungen</button> ein.' : ''}</div>
+  <div class="panel"><h4>Offene Rückrufe · ${list.length}</h4>
+    ${list.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Kundin</th><th>Wunsch</th><th>Vorläufiger Termin</th>${me() ? '' : '<th>Stylist</th>'}<th>Wartet seit</th><th></th></tr></thead><tbody>
+    ${list.map(a => {
+      const urgent = a.date <= addDays(t, 2), hrs = Math.max(1, Math.round((Date.now() - (a.reqAt || a.createdAt || Date.now())) / 36e5));
+      return `<tr class="${urgent ? 'urgent' : ''}"><td><b>${esc(a.name)}</b><br><a class="small" href="tel:${esc(a.phone.replace(/\s/g, ''))}">📞 ${esc(a.phone)}</a>${a.calls ? `<br><span class="small dim">${a.calls}× nicht erreicht</span>` : ''}</td>
+        <td>${esc(svcById(a.service).name)}${a.note ? `<br><span class="small dim">📝 ${esc(a.note)}</span>` : ''}</td>
+        <td>${relDay(a.date)}, ${hm(a.start)} Uhr${urgent ? ' <span class="badge b-bad">dringend</span>' : ''}<br><span class="small dim">reserviert: ${a.dur} Min.</span></td>
+        ${me() ? '' : `<td>${stById(a.stylist).name}</td>`}
+        <td class="small">${hrs < 24 ? hrs + ' Std.' : Math.round(hrs / 24) + ' Tag(e)'}</td>
+        <td><button class="btn btn-gold btn-sm" data-appt="${a.id}">Anrufen &amp; bestätigen</button></td></tr>`;
+    }).join('')}</tbody></table></div>` : '<div class="empty">✓ Keine offenen Rückrufe – alle Farbtermine sind bestätigt.</div>'}
+  </div>
+  ${doneL.length ? `<div class="panel" style="margin-top:16px"><h4>Zuletzt nach Telefonat bestätigt</h4><div class="agenda">${doneL.map(a => `<div class="agenda-row" data-appt="${a.id}"><span class="t">${hm(a.start)}<small>${relDay(a.date)}</small></span><span class="grow"><b>${esc(a.name)}</b> <span class="badge b-ok">fest</span><br><span class="small muted">${esc(svcById(a.service).name)} · ${a.dur} Min. · ${eur(a.price)} · bestätigt von ${esc(a.confirmedBy)}</span>${a.callNote ? `<br><span class="small dim">☎ ${esc(a.callNote)}</span>` : ''}</span></div>`).join('')}</div></div>` : ''}`;
+}
+afterRender.rueckruf = () => {
+  $('#adminBody').onclick = e => { if (e.target.closest('[data-goto]') || e.target.closest('a')) return; const ap = e.target.closest('[data-appt]'); if (ap) apptModal(ap.dataset.appt); };
+};
+
+/* ---------- Preise & Leistungen (nur Inhaber) ---------- */
+function durOpts(sel) { let o = ''; for (let m = 15; m <= 300; m += 15) o += `<option value="${m}" ${m === sel ? 'selected' : ''}>${m} Min.</option>`; return o; }
+function viewPrices() {
+  const gone = SERVICES.filter(s => s.gone);
+  return `<div class="toolbar">
+    <button class="btn btn-gold btn-sm" data-svcnew="1">+ Neue Leistung</button>
+    <span class="grow"></span>
+    <span class="small muted">Alle Preise anpassen um</span><input type="number" id="pctIn" value="5" step="1" style="width:80px"><span class="small muted">%</span>
+    <button class="btn btn-dark btn-sm" id="pctGo">Anwenden</button></div>
+  <div class="notice" style="margin-bottom:16px">Änderungen sind <b>sofort online</b> sichtbar (Preisliste, Buchung, Schnellfinder). Bereits gebuchte Termine behalten ihren Preis. <b>📞 Rückruf</b> = online nur vorläufig buchbar, fest erst nach Telefonat.</div>
+  ${CATS.map(c => { const l = svcs().filter(s => s.cat === c.id); return `<div class="panel" style="margin-bottom:16px"><h4>${c.name} <span class="small dim" style="text-transform:none;letter-spacing:0">${l.length} Leistungen</span></h4>
+    ${l.length ? `<div class="tbl-wrap"><table class="tbl price-tbl"><thead><tr><th>Leistung</th><th class="num">Preis €</th><th>Dauer</th><th>📞 Rückruf</th><th></th></tr></thead><tbody>
+    ${l.map(s => `<tr><td><b>${esc(s.name)}</b>${s.tag ? ` <span class="tag">${esc(s.tag)}</span>` : ''}<br><span class="small dim">${esc(s.desc)}</span></td>
+      <td class="num"><input type="number" min="0" step="1" value="${s.price}" data-sp="${s.id}" class="in-price"></td>
+      <td><select data-sd="${s.id}" class="in-dur">${durOpts(s.dur)}</select></td>
+      <td><label class="switch"><input type="checkbox" data-sc="${s.id}" ${s.confirm ? 'checked' : ''}><span></span></label></td>
+      <td style="white-space:nowrap"><button class="btn btn-dark btn-sm" data-svcedit="${s.id}">✎</button> <button class="btn btn-danger btn-sm" data-svcdel="${s.id}" title="Entfernen">🗑</button></td></tr>`).join('')}
+    </tbody></table></div>` : '<div class="empty">Keine Leistungen in dieser Kategorie.</div>'}</div>`; }).join('')}
+  ${gone.length ? `<div class="panel"><h4>Entfernte Leistungen</h4>${gone.map(s => `<div class="st-row off"><div class="grow"><b>${esc(s.name)}</b><div class="small dim">${catName(s.cat)} · zuletzt ${eur0(s.price)}</div></div><button class="btn btn-ghost btn-sm" data-svcback="${s.id}">Wiederherstellen</button></div>`).join('')}</div>` : ''}`;
+}
+afterRender.preise = () => {
+  const body = $('#adminBody');
+  body.onchange = e => {
+    const t = e.target, d = t.dataset;
+    const s = svcById(d.sp || d.sd || d.sc); if (!s) return;
+    if (d.sp) { const v = Math.round(+t.value); if (!(v >= 0)) { t.value = s.price; return; } if (v === s.price) return; toast(`✓ <b>${esc(s.name)}</b>: ${eur0(s.price)} → ${eur0(v)} · online aktualisiert`); s.price = v; }
+    if (d.sd) { s.dur = +t.value; toast(`✓ <b>${esc(s.name)}</b>: Dauer ${s.dur} Min. – freie Zeiten neu berechnet`); }
+    if (d.sc) { s.confirm = t.checked; toast(s.confirm ? `📞 <b>${esc(s.name)}</b> wird online nur noch vorläufig gebucht (Rückruf nötig).` : `✓ <b>${esc(s.name)}</b> ist online wieder sofort fest buchbar.`); }
+    save(false); renderPublic();
+  };
+  body.onclick = e => {
+    const t = e.target;
+    if (t.closest('[data-goto]')) return;
+    if (t.closest('[data-svcnew]')) return serviceForm();
+    const ed = t.closest('[data-svcedit]'); if (ed) return serviceForm(ed.dataset.svcedit);
+    const del = t.closest('[data-svcdel]'); if (del) {
+      const s = svcById(del.dataset.svcdel), n = S.appts.filter(a => a.service === s.id && isOpenSt(a) && a.date >= today()).length;
+      if (!confirm(`„${s.name}“ aus dem Angebot nehmen?\n\nSie ist dann online nicht mehr buchbar.${n ? `\n${n} bereits gebuchte Termin(e) bleiben bestehen.` : ''}\nUmsätze aus der Vergangenheit bleiben erhalten.`)) return;
+      s.gone = true; save(false); renderPublic(); renderAdmin(); toast(`🗑 „${esc(s.name)}“ entfernt – online nicht mehr buchbar.`); return;
+    }
+    const bk = t.closest('[data-svcback]'); if (bk) { const s = svcById(bk.dataset.svcback); s.gone = false; save(false); renderPublic(); renderAdmin(); toast(`✓ „${esc(s.name)}“ ist wieder im Angebot.`); return; }
+    if (t.id === 'pctGo') {
+      const p = +$('#pctIn').value; if (!p) return;
+      if (!confirm(`Alle ${svcs().length} Preise um ${p > 0 ? '+' : ''}${p} % ändern (auf volle Euro gerundet)?`)) return;
+      svcs().forEach(s => { s.price = Math.max(0, Math.round(s.price * (1 + p / 100))); });
+      save(false); renderPublic(); renderAdmin(); toast(`✓ Alle Preise um ${p > 0 ? '+' : ''}${p} % angepasst – online aktualisiert.`);
+    }
+  };
+};
+function serviceForm(id) {
+  const s = id ? svcById(id) : { name: '', cat: 'schnitt', desc: '', price: 30, dur: 30, tag: '', confirm: false };
+  openModal(`<p class="eyebrow">${id ? 'Leistung bearbeiten' : 'Neue Leistung'}</p><h3 class="h3">${id ? esc(s.name) : 'Leistung anlegen'}</h3>
+    <form id="svcForm">
+      <div class="field"><label>Name *</label><input name="name" required value="${esc(s.name)}" placeholder="z. B. Keratin-Glättung"></div>
+      <div class="row"><div class="field"><label>Kategorie</label><select name="cat">${CATS.map(c => `<option value="${c.id}" ${c.id === s.cat ? 'selected' : ''}>${c.name}</option>`).join('')}</select></div>
+      <div class="field"><label>Label (optional)</label><input name="tag" value="${esc(s.tag || '')}" placeholder="z. B. Neu, Beliebt"></div></div>
+      <div class="field"><label>Beschreibung</label><input name="desc" value="${esc(s.desc)}" placeholder="Was ist enthalten?"></div>
+      <div class="row"><div class="field"><label>Preis (€) *</label><input name="price" type="number" min="0" step="1" required value="${s.price}"></div>
+      <div class="field"><label>Dauer</label><select name="dur">${durOpts(s.dur)}</select></div></div>
+      <label class="check"><input type="checkbox" name="confirm" ${s.confirm ? 'checked' : ''}> 📞 Online nur vorläufig – Bestätigung erst nach Telefonat (z. B. Damen-Farbe)</label>
+      <button class="btn btn-gold" style="width:100%;margin-top:10px">${id ? 'Speichern' : 'Leistung anlegen'}</button>
+    </form>`);
+  $('#svcForm').onsubmit = e => {
+    e.preventDefault(); const f = e.target.elements;
+    const v = { name: f.name.value.trim(), cat: f.cat.value, tag: f.tag.value.trim(), desc: f.desc.value.trim(), price: Math.max(0, Math.round(+f.price.value)), dur: +f.dur.value, confirm: f.confirm.checked };
+    if (!v.name) return;
+    if (id) Object.assign(s, v); else SERVICES.push({ id: 's' + Date.now().toString(36), w: 2, ...v });
+    save(false); closeModal(); renderPublic(); renderAdmin();
+    toast(`✓ „${esc(v.name)}“ ${id ? 'gespeichert' : 'angelegt'} – sofort online buchbar.`);
+  };
+}
+
+/* ---------- Mitarbeiter verwalten (nur Inhaber) ---------- */
+function viewStaff() {
+  const t = today(), cm = ym(t), gone = STYLISTS.filter(st => st.gone);
+  return `<div class="toolbar"><button class="btn btn-gold btn-sm" data-stnew="1">+ Mitarbeiter hinzufügen</button><span class="grow"></span>
+    <span class="small muted">Jeder Mitarbeiter meldet sich mit eigener PIN an und sieht nur seinen eigenen Bereich.</span></div>
+  <div class="staff-grid">${team().map(st => {
+    const up = S.appts.filter(a => a.stylist === st.id && isOpenSt(a) && a.date >= t && a.date <= addDays(t, 14)).length;
+    const rev = sum(S.appts.filter(a => a.stylist === st.id && done(a) && ym(a.date) === cm));
+    return `<div class="staff-card">
+      <div class="who">${avatar(st, 1)}<span><b>${esc(st.name)}</b> ${st.id === OWNER_ID ? '<span class="badge">INHABER</span>' : ''}<br><span class="small dim">${esc(st.role)}</span></span></div>
+      <dl class="dl small" style="margin:14px 0">
+        <dt>Arbeitstage</dt><dd>${[1, 2, 3, 4, 5, 6].map(d => `<span class="daypill ${st.days.includes(d) ? 'on' : ''}">${WD[d]}</span>`).join('')}</dd>
+        <dt>Leistungen</dt><dd>${st.cats.map(catName).join(', ')}</dd>
+        <dt>Login</dt><dd>${st.id === OWNER_ID ? 'E-Mail &amp; Passwort' : `PIN <span class="pin" data-pin="${esc(st.pin)}">••••</span> <button class="linkbtn small" data-showpin="1">zeigen</button>`}</dd>
+        <dt>Nächste 14 T.</dt><dd>${up} Termine</dd><dt>Umsatz ${MON[+cm.slice(5) - 1].slice(0, 3)}</dt><dd>${eur0(rev)}</dd>
+      </dl>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-dark btn-sm" data-stedit="${st.id}">✎ Bearbeiten</button>${st.id === OWNER_ID ? '' : `<button class="btn btn-danger btn-sm" data-stdel="${st.id}">Entfernen</button>`}</div>
+    </div>`;
+  }).join('')}</div>
+  ${gone.length ? `<div class="panel" style="margin-top:16px"><h4>Ehemalige Mitarbeiter</h4><p class="small dim" style="margin-top:-6px">Bleiben in Umsatz-Auswertungen &amp; DATEV erhalten. Login ist gesperrt.</p>
+    ${gone.map(st => `<div class="st-row off">${avatar(st, 1)}<div class="grow"><b>${esc(st.name)}</b><div class="small dim">${esc(st.role)} · ausgeschieden ${st.goneAt ? fmtDate(st.goneAt) + st.goneAt.slice(0, 4) : ''} · Umsatz gesamt ${eur0(sum(S.appts.filter(a => a.stylist === st.id && done(a))))}</div></div><button class="btn btn-ghost btn-sm" data-stback="${st.id}">Wieder aktivieren</button></div>`).join('')}</div>` : ''}`;
+}
+afterRender.team = () => {
+  $('#adminBody').onclick = e => {
+    const t = e.target;
+    if (t.closest('[data-stnew]')) return staffForm();
+    const ed = t.closest('[data-stedit]'); if (ed) return staffForm(ed.dataset.stedit);
+    const del = t.closest('[data-stdel]'); if (del) return removeStaff(del.dataset.stdel);
+    const bk = t.closest('[data-stback]'); if (bk) { const st = stById(bk.dataset.stback); st.gone = false; delete st.goneAt; save(false); renderPublic(); renderAdmin(); toast(`✓ ${esc(st.name)} ist wieder aktiv – online buchbar, Login mit PIN ${esc(st.pin)}.`); return; }
+    if (t.dataset.showpin) { const p = t.previousElementSibling; const shown = p.textContent !== '••••'; p.textContent = shown ? '••••' : p.dataset.pin; t.textContent = shown ? 'zeigen' : 'verbergen'; }
+  };
+};
+function newPin() { let p; do p = String(1000 + Math.floor(Math.random() * 9000)); while (STYLISTS.some(s => s.pin === p)); return p; }
+function staffForm(id) {
+  const st = id ? stById(id) : { name: '', role: '', bio: '', spec: [], days: [2, 3, 4, 5, 6], cats: ['schnitt', 'styling'], pin: newPin() };
+  const own = id === OWNER_ID;
+  openModal(`<p class="eyebrow">${id ? 'Mitarbeiter bearbeiten' : 'Neuer Mitarbeiter'}</p><h3 class="h3">${id ? esc(st.name) : 'Mitarbeiter hinzufügen'}</h3>
+    <form id="stForm">
+      <div class="row"><div class="field"><label>Name (wie er online erscheint) *</label><input name="name" required value="${esc(st.name)}" placeholder="z. B. Elif"></div>
+      <div class="field"><label>Position</label><input name="role" value="${esc(st.role)}" placeholder="z. B. Friseurin, Auszubildende"></div></div>
+      <div class="field"><label>Kurzvorstellung für die Website</label><input name="bio" value="${esc(st.bio)}" placeholder="1–2 Sätze"></div>
+      <div class="field"><label>Spezialgebiete (mit Komma getrennt)</label><input name="spec" value="${esc(st.spec.join(', '))}" placeholder="z. B. Balayage, Hochsteckfrisur"></div>
+      <div class="field"><label>Arbeitstage *</label><div class="cb-row">${[1, 2, 3, 4, 5, 6].map(d => `<label class="cb"><input type="checkbox" name="day" value="${d}" ${st.days.includes(d) ? 'checked' : ''}><span>${WD[d]}</span></label>`).join('')}</div></div>
+      <div class="field"><label>Bietet an *</label><div class="cb-row">${CATS.map(c => `<label class="cb"><input type="checkbox" name="cat" value="${c.id}" ${st.cats.includes(c.id) ? 'checked' : ''}><span>${c.name}</span></label>`).join('')}</div></div>
+      ${own ? '' : `<div class="field"><label>Login-PIN (4-stellig) *</label><div style="display:flex;gap:8px"><input name="pin" required pattern="[0-9]{4}" maxlength="4" inputmode="numeric" value="${esc(st.pin)}" style="max-width:140px"><button type="button" class="btn btn-dark btn-sm" id="pinGen">Neue PIN</button></div></div>`}
+      <div id="stErr"></div>
+      <button class="btn btn-gold" style="width:100%">${id ? 'Speichern' : 'Mitarbeiter anlegen'}</button>
+    </form>`);
+  const f = $('#stForm');
+  if ($('#pinGen')) $('#pinGen').onclick = () => { f.elements.pin.value = newPin(); };
+  f.onsubmit = e => {
+    e.preventDefault();
+    const fd = new FormData(f);
+    const v = { name: fd.get('name').trim(), role: fd.get('role').trim() || 'Friseur/in', bio: fd.get('bio').trim(), spec: fd.get('spec').split(',').map(x => x.trim()).filter(Boolean), days: fd.getAll('day').map(Number), cats: fd.getAll('cat') };
+    const err = m => $('#stErr').innerHTML = `<div class="notice err" style="margin-bottom:12px">${m}</div>`;
+    if (!v.name) return err('Bitte einen Namen eingeben.');
+    if (!v.days.length) return err('Bitte mindestens einen Arbeitstag wählen.');
+    if (!v.cats.length) return err('Bitte mindestens einen Leistungsbereich wählen.');
+    if (!own) { v.pin = fd.get('pin'); if (STYLISTS.some(s => s.pin === v.pin && s.id !== id)) return err('Diese PIN ist schon vergeben.'); }
+    if (id) {
+      const lost = S.appts.filter(a => a.stylist === id && isOpenSt(a) && a.date >= today() && !v.days.includes(wd(a.date))).length;
+      Object.assign(st, v);
+      save(false); closeModal(); renderPublic(); renderAdmin();
+      toast(`✓ ${esc(v.name)} gespeichert.${lost ? `<br>⚠ ${lost} Termin(e) liegen an Tagen, die jetzt frei sind – bitte im Kalender prüfen.` : ''}`, lost ? 8000 : 5200);
+    } else {
+      const nid = v.name.toLowerCase().normalize('NFD').replace(/[^a-z]/g, '').slice(0, 10) + '-' + Date.now().toString(36).slice(-4);
+      STYLISTS.push({ id: nid, ...v });
+      save(false); closeModal(); renderPublic(); renderAdmin();
+      toast(`✓ <b>${esc(v.name)}</b> ist angelegt – erscheint sofort im Team, in der Online-Buchung und im Kalender.<br>Login: Mitarbeiter · PIN <b>${esc(v.pin)}</b>`, 8000);
+    }
+  };
+}
+function removeStaff(id) {
+  const st = stById(id), t = today(), nm = nowMin();
+  const fut = S.appts.filter(a => a.stylist === id && isOpenSt(a) && (a.date > t || (a.date === t && a.start >= nm))).sort((a, b) => a.date.localeCompare(b.date) || a.start - b.start);
+  openModal(`<p class="eyebrow">Mitarbeiter entfernen</p><h3 class="h3">${esc(st.name)} entfernen?</h3>
+    <p class="muted small">${esc(st.name)} verschwindet sofort von der Website und aus der Online-Buchung, der Login wird gesperrt. Vergangene Termine und Umsätze bleiben für Auswertung &amp; DATEV erhalten.</p>
+    ${fut.length ? `<div class="notice warn" style="margin:14px 0">${esc(st.name)} hat noch <b>${fut.length} offene Termin(e)</b>:<br>${fut.slice(0, 5).map(a => `· ${relDay(a.date)} ${hm(a.start)} – ${esc(a.name)} (${esc(svcById(a.service).name)})`).join('<br>')}${fut.length > 5 ? `<br>· … und ${fut.length - 5} weitere` : ''}</div>
+    <label class="check"><input type="radio" name="rm" value="move" checked> Auf freie Kollegen umverteilen (empfohlen) – Kunden erhalten eine SMS mit dem neuen Stylisten</label>
+    <label class="check"><input type="radio" name="rm" value="cancel"> Alle stornieren – Kunden erhalten eine Absage-SMS</label>` : '<div class="notice ok" style="margin:14px 0">✓ Keine offenen Termine – kann direkt entfernt werden.</div>'}
+    <div style="display:flex;gap:8px;margin-top:16px"><button class="btn btn-danger" id="rmGo">${esc(st.name)} entfernen</button><button class="btn btn-ghost" onclick="closeModal()">Abbrechen</button></div>`);
+  $('#rmGo').onclick = () => {
+    load(); const s2 = stById(id); const mode = $('input[name=rm]:checked')?.value || 'move';
+    let moved = 0, cancelled = 0;
+    S.appts.filter(a => a.stylist === id && isOpenSt(a) && (a.date > t || (a.date === t && a.start >= nm))).forEach(a => {
+      const svc = svcById(a.service);
+      const cand = mode === 'move' ? team().filter(x => x.id !== id && x.cats.includes(svc.cat) && works(x, a.date) && !conflictOf(x.id, a.date, a.start, a.dur)) : [];
+      if (cand.length) { a.stylist = leastBusy(cand, a.date).id; a.movedFrom = id; moved++; dayIdx = null; }
+      else { a.status = 'storniert'; a.cancelReason = `${s2.name} nicht mehr im Team`; a.cancelledAt = Date.now(); cancelled++; }
+    });
+    s2.gone = true; s2.goneAt = t;
+    save(false); closeModal(); renderPublic(); renderAdmin();
+    toast(`✓ ${esc(s2.name)} entfernt.${moved ? `<br>↪ ${moved} Termin(e) auf Kollegen umverteilt` : ''}${cancelled ? `<br>✗ ${cancelled} Termin(e) storniert – ${mode === 'move' ? 'kein Kollege frei, ' : ''}Kunden per SMS informiert (Simulation)` : ''}`, 8000);
+  };
+}
+
 /* ---------- Live-Synchronisation ---------- */
+function renderPublic() {
+  renderServices(); renderTeam(); initFinder(); fillFinderStylists(); renderFinder(); renderCare();
+  if (B.step === 1 || B.step === 2 || B.step === 3) renderBooking();
+}
 function refreshAll() {
-  renderFinder();
-  if (B.step === 3 || B.step === 2) renderBooking();
+  renderPublic();
   if (isAdmin() && !(A.tab === 'kasse' && $('#datevProg')?.children.length)) renderAdmin();
 }
 window.addEventListener('storage', e => {
@@ -1115,7 +1491,7 @@ window.addEventListener('storage', e => {
   const beforeStatus = new Map(S.appts.map(a => [a.id, a.status]));
   load(); dayIdx = null;
   if (isAdmin()) {
-    S.appts.filter(a => !before.has(a.id)).forEach(a => toast(`🔔 <b>Neue ${SRC[a.source]}-Buchung</b> (anderes Fenster)<br>${esc(a.name)} · ${esc(svcById(a.service).name)}<br>${relDay(a.date)} ${hm(a.start)} bei ${stById(a.stylist).name}`));
+    S.appts.filter(a => !before.has(a.id)).forEach(a => toast(`🔔 <b>Neue ${a.status === 'vorlaeufig' ? 'vorläufige ' : ''}${SRC[a.source]}-Buchung</b> (anderes Fenster)<br>${esc(a.name)} · ${esc(svcById(a.service).name)}<br>${relDay(a.date)} ${hm(a.start)} bei ${stById(a.stylist).name}`));
     S.appts.filter(a => before.has(a.id) && beforeStatus.get(a.id) !== 'storniert' && a.status === 'storniert').forEach(a => toast(`↩ <b>Storno</b>: ${esc(a.name)} · ${relDay(a.date)} ${hm(a.start)}`));
   }
   refreshAll();
@@ -1125,6 +1501,7 @@ $('#resetDemo').onclick = () => { if (confirm('Alle Demo-Daten auf den Ausgangsz
 /* ---------- Start ---------- */
 load();
 renderOpen(); renderHours(); renderServices(); renderTeam(); initFinder(); renderFinder(); renderCare(); renderBooking();
+sessionStorage.removeItem('luna-admin');
 document.body.classList.toggle('is-admin', isAdmin());
 if (isAdmin()) renderAdmin();
 setInterval(() => { $('#liveClock').textContent = new Date().toLocaleTimeString('de-DE'); }, 1000);
