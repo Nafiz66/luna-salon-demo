@@ -406,3 +406,5 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
 .cb span{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:6px 13px;font-size:13px;color:var(--muted);transition:.15s}
 .cb input:checked+span{background:var(--gold);border-color:var(--gold);color:#16120a}
 .cb input:focus-visible+span{outline:2px solid var(--gold-l);outline-offset:2px}
+.login-seg{display:flex;margin:0 auto 20px;width:100%}
+.login-seg button{flex:1;padding:12px 14px;font-size:15px;font-weight:600}

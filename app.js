@@ -565,19 +565,21 @@ $('#loginBtn').onclick = () => loginModal('owner');
 function loginModal(mode) {
   const staff = team().filter(st => st.id !== OWNER_ID);
   openModal(`<img src="logo.svg" class="login-logo" alt="LUNA">
-    <div class="seg" style="display:flex;margin:0 auto 18px;width:max-content"><button data-lm="owner" class="${mode === 'owner' ? 'active' : ''}">Inhaber</button><button data-lm="staff" class="${mode === 'staff' ? 'active' : ''}">Mitarbeiter</button></div>
+    <p class="small muted" style="text-align:center;margin:0 0 8px">Ich bin …</p>
+    <div class="seg login-seg"><button data-lm="owner" class="${mode === 'owner' ? 'active' : ''}">◆ Inhaber</button><button data-lm="staff" class="${mode === 'staff' ? 'active' : ''}">✂ Mitarbeiter</button></div>
     ${mode === 'owner' ? `
     <h3 class="h3" style="text-align:center">Inhaber-Login</h3>
     <p class="muted small" style="text-align:center">Alles: Kalender, Rückrufe, Umsätze, Kasse &amp; DATEV, Preise und Mitarbeiter.</p>
     <form id="loginForm">
-      <div class="field"><label>E-Mail</label><input name="u" type="email" placeholder="${DEMO_USER}" required></div>
-      <div class="field"><label>Passwort</label><input name="p" type="password" placeholder="${DEMO_PW}" required></div>
+      <div class="field"><label>E-Mail <span class="dim">(Mitarbeiter: Name)</span></label><input name="u" type="text" autocomplete="username" placeholder="${DEMO_USER}" required></div>
+      <div class="field"><label>Passwort <span class="dim">(Mitarbeiter: PIN)</span></label><input name="p" type="password" autocomplete="current-password" placeholder="${DEMO_PW}" required></div>
       <div id="loginErr"></div>
       <button class="btn btn-gold" style="width:100%">Anmelden</button>
     </form>
     <div class="divider">oder</div>
     <button class="btn btn-ghost" style="width:100%" id="demoLogin">◆ Demo als Inhaber (${esc(stById(OWNER_ID).name)}) einloggen</button>
-    <p class="small dim" style="text-align:center;margin-top:12px">Demo-Zugang: ${DEMO_USER} / ${DEMO_PW}</p>` : `
+    <p class="small dim" style="text-align:center;margin-top:12px">Demo-Zugang: ${DEMO_USER} / ${DEMO_PW}</p>
+    <p class="small muted" style="text-align:center;margin-top:4px">Mitarbeiter? <button class="linkbtn" data-lm="staff">Hier mit Name &amp; PIN anmelden →</button></p>` : `
     <h3 class="h3" style="text-align:center">Mitarbeiter-Login</h3>
     <p class="muted small" style="text-align:center">Eigener Bereich: eigener Kalender, eigene Rückrufe &amp; eigene Zahlen.</p>
     ${staff.length ? `<form id="pinForm">
@@ -594,7 +596,12 @@ function loginModal(mode) {
   if (mode === 'owner') {
     $('#loginForm').onsubmit = e => {
       e.preventDefault(); const f = new FormData(e.target);
-      if (f.get('u').trim().toLowerCase() === DEMO_USER && f.get('p') === DEMO_PW) doLogin({ role: 'owner' }); else err();
+      const u = f.get('u').trim().toLowerCase(), p = f.get('p').trim();
+      if (u === DEMO_USER && p === DEMO_PW) return doLogin({ role: 'owner' });
+      // Mitarbeiter dürfen sich auch hier mit Name + PIN anmelden
+      const st = team().find(x => x.id !== OWNER_ID && x.name.toLowerCase() === u);
+      if (st && st.pin === p) return doLogin({ role: 'staff', id: st.id });
+      $('#loginErr').innerHTML = `<div class="notice err" style="margin-bottom:12px">${st ? 'PIN falsch.' : u.includes('@') ? 'E-Mail oder Passwort falsch.' : 'Unbekannter Name. Mitarbeiter: oben „✂ Mitarbeiter“ wählen oder Name + PIN eingeben.'}</div>`;
     };
     $('#demoLogin').onclick = () => doLogin({ role: 'owner' });
   } else if ($('#pinForm')) {
